@@ -25,9 +25,8 @@ public class Farm implements Observer {
 	private Farmer farmer;
 	private Sheep sheep;
 	private List<ImageTile> images;
-	private Cabage cabage;
 
-	private boolean action = false;
+	private boolean action;
 
 	private static final String SAVE_FNAME = "config/savedGame";
 
@@ -42,6 +41,8 @@ public class Farm implements Observer {
 	private Farm(int max_x, int max_y) {
 		if (max_x < 5 || max_y < 5)
 			throw new IllegalArgumentException();
+
+		action = false;
 
 		this.max_x = max_x;
 		this.max_y = max_y;
@@ -61,14 +62,10 @@ public class Farm implements Observer {
 		// Adicionar Imagens
 		farmer = new Farmer(new Point2D(0, 0));
 		sheep = new Sheep(new Point2D(0, 3));
-		cabage = new Cabage( new Point2D(4,3));
-		
-		images.add(cabage);
-		
+
 		images.add(sheep);
 		images.add(farmer);
-		
-		
+
 		addLand();
 
 		ImageMatrixGUI.getInstance().addImages(images);
@@ -87,50 +84,61 @@ public class Farm implements Observer {
 
 	@Override
 	public void update(Observable gui, Object a) {
-
-		cabage.addCiclo();
-		sheep.addCiclo();
-		
 		System.out.println("Update sent " + a);
+		int key = (Integer) a;
+		if (key == 32)
+			action = true;
 
-		if (a instanceof Integer) {
-			int key = (Integer) a;
-			if (key == 32)
-				action = true;
-			
-			if (action == true) {
-					if (Direction.isDirection(key)) {
-						farmer.Position(Direction.directionFor(key));
-						if (isInside(farmer.getNova())) {
-							action();
-					}
-				}
-			}
-			 else if (Direction.isDirection(key)) {
+		if (action == true) {
+			if (Direction.isDirection(key)) {
 				farmer.Position(Direction.directionFor(key));
-				if (isInside(farmer.getNova()))
-					farmer.move();
-			}
-		}
-
+					if (isInside(farmer.getNova())) 
+					
+						switch (checkLand()) {
+							case 1:
+								Plant();
+								action= false;
+							case 2:
+								TakeCare();
+								action= false;
+							default: 
+								Plow();
+								action= false;
+						}
+				}
+			
+		} else {
+			farmer.Position(Direction.directionFor(key));
+				if (Direction.isDirection(key))
+					if (isInside(farmer.getNova()))
+						farmer.move();
+	}
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: ");
 		ImageMatrixGUI.getInstance().update();
 	}
-	
-	public boolean checkLand() {
-		for(ImageTile x :images)
-			if(x.getPosition() == farmer.getNova() && x.getName() == "plowed")
-				return true;
-		return false;
-			
+
+	public void TakeCare() {
+
+	}
+	public void Plow() {
+		images.add(new Plowed(farmer.getNova()));
+		ImageMatrixGUI.getInstance().addImages(images);
 	}
 
-	public void action() {
+	public int checkLand() {
+		for (ImageTile x : images) {
+			if (x.getPosition().equals(farmer.getNova()) && x.getName().equals("plowed")) 
+				return 1;
+			if (x.getPosition().equals(farmer.getNova()) && x.getName().equals("planted"))
+				return 2;
+		}
+		return 0;
+	}
+
+	public void Plant() {
 		Random rnd = new Random();
 		int rand = rnd.nextInt(2);
-		
 		images.add(new Planted(farmer.getNova()));
-		
 		switch (rand) {
 		case 1:
 			images.add(new Cabage(farmer.getNova()));
@@ -140,7 +148,6 @@ public class Farm implements Observer {
 			break;
 		}
 		
-		action = false;
 		ImageMatrixGUI.getInstance().addImages(images);
 	}
 
@@ -171,9 +178,9 @@ public class Farm implements Observer {
 	}
 
 	public static void main(String[] args) {
-		Farm f = new Farm(20, 15);
+		Farm f = new Farm(5, 7);
 		f.play();
-//		f.checkLand();
+		// f.checkLand();
 	}
 
 }
