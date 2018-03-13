@@ -1,4 +1,4 @@
-package pt.iul.ista.poo.farm.objects;
+package objects;
 
 import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Point2D;
