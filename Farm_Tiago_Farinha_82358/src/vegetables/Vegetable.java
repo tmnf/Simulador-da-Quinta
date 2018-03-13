@@ -37,5 +37,6 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 	public void setEstado(String state) {
 		estado=state;
 	}
+	
 
 }

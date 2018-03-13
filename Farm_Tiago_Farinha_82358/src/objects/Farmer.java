@@ -2,10 +2,17 @@ package objects;
 
 import pt.iul.ista.poo.utils.Point2D;
 import pt.iul.ista.poo.utils.Vector2D;
+
+import java.awt.Point;
+
+import farm.Farm;
 import pt.iul.ista.poo.utils.Direction;
 
 public class Farmer extends FarmObject {
 
+	private Point2D actual;
+	Point2D nova;
+	
 	public Farmer(Point2D p) {
 		super(p);
 	}
@@ -15,9 +22,9 @@ public class Farmer extends FarmObject {
 		return 3;
 	}
 
-	public void move(Direction x) {
-		Point2D actual = getPosition();
-		Point2D nova = null;
+	public void Position(Direction x) {
+		actual = getPosition();
+		nova = null;
 
 		switch (x) {
 		case LEFT:
@@ -35,8 +42,18 @@ public class Farmer extends FarmObject {
 		default:
 			return;
 		}
-
+	}
+	
+	
+	public void move() {
 		setPosition(nova);
+	}
+
+	public Point2D getActual() {
+		return actual;
+	}
+	public Point2D getNova() {
+		return nova;
 	}
 
 }
