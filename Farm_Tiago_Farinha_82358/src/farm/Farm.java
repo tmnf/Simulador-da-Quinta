@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import animals.Sheep;
+import interfaces.Updatable;
 import objects.Farmer;
 import objects.Land;
 import objects.Planted;
@@ -27,6 +28,7 @@ public class Farm implements Observer {
 	private List<ImageTile> images;
 
 	private boolean action;
+	private int pontos;
 
 	private static final String SAVE_FNAME = "config/savedGame";
 
@@ -84,52 +86,69 @@ public class Farm implements Observer {
 
 	@Override
 	public void update(Observable gui, Object a) {
-		System.out.println("Update sent " + a);
+		// System.out.println("Update sent " + a);
 		int key = (Integer) a;
 		if (key == 32)
 			action = true;
 
-		if (action == true) {
-			if (Direction.isDirection(key)) {
-				farmer.Position(Direction.directionFor(key));
-					if (isInside(farmer.getNova())) 
-					
-						switch (checkLand()) {
-							case 1:
-								Plant();
-								action= false;
-							case 2:
-								TakeCare();
-								action= false;
-							default: 
-								Plow();
-								action= false;
-						}
-				}
-			
-		} else {
-			farmer.Position(Direction.directionFor(key));
-				if (Direction.isDirection(key))
-					if (isInside(farmer.getNova()))
-						farmer.move();
-	}
-		ImageMatrixGUI.getInstance().setStatusMessage("Points: ");
+		action(key);
+		addCycle();
+
+		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + pontos);
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	public void TakeCare() {
+	private void action(int key) {
+		if (action == true) {
+			if (Direction.isDirection(key)) {
+				farmer.Position(Direction.directionFor(key));
+				if (isInside(farmer.getNova()))
+					action = false;
+//					System.out.println(checkLand());
+				switch (checkLand()) {
+				case 1:
+					Plant();
+				case 2:
+					TakeCare();
+				default:
+					Plow();
+				}
+			}
+
+		} else
+			justMove(key);
 
 	}
-	public void Plow() {
+
+	public void justMove(int key) {
+		if (Direction.isDirection(key)) {
+			farmer.Position(Direction.directionFor(key));
+			if (isInside(farmer.getNova()))
+				farmer.move();
+		}
+	}
+
+	private void addCycle() {
+		for (ImageTile x : images)
+			if (x instanceof Updatable)
+				((Updatable) x).addCiclo();
+	}
+
+	private void TakeCare() {
+
+	}
+
+	private void Plow() {
 		images.add(new Plowed(farmer.getNova()));
 		ImageMatrixGUI.getInstance().addImages(images);
 	}
 
-	public int checkLand() {
+	private int checkLand() {
 		for (ImageTile x : images) {
-			if (x.getPosition().equals(farmer.getNova()) && x.getName().equals("plowed")) 
+			boolean pos = x.getPosition().equals(farmer.getNova());
+			if (pos && x.getName().equals("plowed")) 
 				return 1;
-			if (x.getPosition().equals(farmer.getNova()) && x.getName().equals("planted"))
+			if (pos && x.getName().equals("planted")) 
 				return 2;
 		}
 		return 0;
@@ -138,7 +157,7 @@ public class Farm implements Observer {
 	public void Plant() {
 		Random rnd = new Random();
 		int rand = rnd.nextInt(2);
-		images.add(new Planted(farmer.getNova()));
+
 		switch (rand) {
 		case 1:
 			images.add(new Cabage(farmer.getNova()));
@@ -147,8 +166,6 @@ public class Farm implements Observer {
 			images.add(new Tomato(farmer.getNova()));
 			break;
 		}
-		
-		ImageMatrixGUI.getInstance().addImages(images);
 	}
 
 	public int getX() {
@@ -160,7 +177,7 @@ public class Farm implements Observer {
 	}
 
 	public boolean isInside(Point2D point) {
-		if (point.getX() < getX() && point.getY() < getY() && point.getX() >= 0 && point.getY() >= 0)
+		if (ImageMatrixGUI.getInstance().isWithinBounds(point))
 			return true;
 		else
 			return false;
@@ -178,7 +195,7 @@ public class Farm implements Observer {
 	}
 
 	public static void main(String[] args) {
-		Farm f = new Farm(5, 7);
+		Farm f = new Farm(5, 5);
 		f.play();
 		// f.checkLand();
 	}

@@ -13,11 +13,14 @@ public class Sheep extends Animal {
 
 	@Override
 	public void getStatus() {
-		// ADICIONAR MOVIMENTO ALEATORIO
-		if (getCiclos() >= faminto)
+		if (getCiclos()>=poucaFome && getCiclos()< faminto)
+			startMoving();
+		else if (getCiclos() >= faminto)
 			setEstado("famished_sheep");
 		else
 			setEstado("sheep");
 	}
+	
+	
 
 }

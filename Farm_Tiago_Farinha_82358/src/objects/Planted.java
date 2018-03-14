@@ -7,5 +7,4 @@ public class Planted extends Land {
 	public Planted(Point2D p) {
 		super(p);
 	}
-
 }

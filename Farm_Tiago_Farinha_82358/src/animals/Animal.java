@@ -15,6 +15,10 @@ public abstract class Animal extends FarmObject implements Interactable, Updatab
 		getStatus();
 	}
 	
+	public void startMoving() {
+		
+	}
+	
 	@Override
 	public int getLayer() {
 		return 2;
