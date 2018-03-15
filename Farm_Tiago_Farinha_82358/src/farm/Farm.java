@@ -8,11 +8,12 @@ import java.util.Random;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import animals.Animal;
 import animals.Sheep;
+import interfaces.Interactable;
 import interfaces.Updatable;
 import objects.Farmer;
 import objects.Land;
-import objects.Planted;
 import objects.Plowed;
 import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.gui.ImageTile;
@@ -20,6 +21,7 @@ import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Cabage;
 import vegetables.Tomato;
+import vegetables.Vegetable;
 
 public class Farm implements Observer {
 
@@ -63,7 +65,7 @@ public class Farm implements Observer {
 
 		// Adicionar Imagens
 		farmer = new Farmer(new Point2D(0, 0));
-		sheep = new Sheep(new Point2D(0, 3));
+		sheep = new Sheep(new Point2D(2,2));
 
 		images.add(sheep);
 		images.add(farmer);
@@ -74,53 +76,44 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	private void addLand() {
-		for (int x = 0; x != max_x; x++)
-			for (int z = 0; z != max_y; z++)
-				images.add(new Land(new Point2D(x, z)));
-	}
-
 	private void loadScenario() {
 		registerAll();
 	}
 
 	@Override
 	public void update(Observable gui, Object a) {
-		// System.out.println("Update sent " + a);
+
 		int key = (Integer) a;
+		boolean dentro = isInside(sheep.getPosition());
 		if (key == 32)
 			action = true;
 
-		action(key);
+		if (action == true)
+			action(key);
+		else
+			justMove(key);
+
 		addCycle();
+		sheep.Position();
 
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + pontos);
+		ImageMatrixGUI.getInstance().addImages(images);
 		ImageMatrixGUI.getInstance().update();
 	}
 
+	// ============================Movimentos/TriggerAction/Ciclos)================//
 	private void action(int key) {
-		if (action == true) {
-			if (Direction.isDirection(key)) {
-				farmer.Position(Direction.directionFor(key));
-				if (isInside(farmer.getNova()))
-					action = false;
-//					System.out.println(checkLand());
-				switch (checkLand()) {
-				case 1:
-					Plant();
-				case 2:
-					TakeCare();
-				default:
-					Plow();
-				}
+
+		if (Direction.isDirection(key)) {
+			farmer.Position(Direction.directionFor(key));
+			if (isInside(farmer.getNova())) {
+				action = false;
+				doAction();
 			}
-
-		} else
-			justMove(key);
-
+		}
 	}
 
-	public void justMove(int key) {
+	private void justMove(int key) {
 		if (Direction.isDirection(key)) {
 			farmer.Position(Direction.directionFor(key));
 			if (isInside(farmer.getNova()))
@@ -134,30 +127,20 @@ public class Farm implements Observer {
 				((Updatable) x).addCiclo();
 	}
 
-	private void TakeCare() {
+	// =====================Acções/Intereções========================//
 
+	private void takeCare(ImageTile x) {
+		if (x instanceof Interactable)
+			((Interactable) x).takeCare();
 	}
 
-	private void Plow() {
+	private void plow() {
 		images.add(new Plowed(farmer.getNova()));
-		ImageMatrixGUI.getInstance().addImages(images);
 	}
 
-	private int checkLand() {
-		for (ImageTile x : images) {
-			boolean pos = x.getPosition().equals(farmer.getNova());
-			if (pos && x.getName().equals("plowed")) 
-				return 1;
-			if (pos && x.getName().equals("planted")) 
-				return 2;
-		}
-		return 0;
-	}
-
-	public void Plant() {
+	private void plant() {
 		Random rnd = new Random();
 		int rand = rnd.nextInt(2);
-
 		switch (rand) {
 		case 1:
 			images.add(new Cabage(farmer.getNova()));
@@ -166,8 +149,77 @@ public class Farm implements Observer {
 			images.add(new Tomato(farmer.getNova()));
 			break;
 		}
+
 	}
 
+	private void cut(ImageTile x) {
+		if (x.getName().equals("cabage"))
+			pontos += 2;
+		if (x.getName().equals("tomato"))
+			pontos += 3;
+		images.remove(x);
+	}
+
+	private void remove(ImageTile x) {
+		images.remove(x);
+	}
+
+	private void doAction() {
+		for (ImageTile x : images)
+			if (ruined(x)) {
+				remove(x);
+				return;
+			}
+		for (ImageTile x : images)
+			if (grown(x)) {
+				cut(x);
+				return;
+			}
+		for (ImageTile x : images)
+			if (planted(x)) {
+				takeCare(x);
+				return;
+			}
+	
+		for (ImageTile x : images)
+			if (plowed(x)) {
+				plant();
+				return;
+			}
+		plow();
+
+	}
+
+	// =====================Estados do Solo========================//
+	private boolean planted(ImageTile x) {
+		if (x.getPosition().equals(farmer.getNova())
+				&& (x.getName().equals("small_cabage") || x.getName().equals("small_tomato")))
+			return true;
+		return false;
+
+	}
+
+	private boolean grown(ImageTile x) {
+		if (x.getPosition().equals(farmer.getNova()) && (x.getName().equals("cabage") || x.getName().equals("tomato")))
+			return true;
+		return false;
+
+	}
+
+	private boolean ruined(ImageTile x) {
+		if (x.getPosition().equals(farmer.getNova())
+				&& (x.getName().equals("bad_cabage") || x.getName().equals("bad_tomato")))
+			return true;
+		return false;
+	}
+
+	private boolean plowed(ImageTile x) {
+		if (x.getPosition().equals(farmer.getNova()) && x.getName().equals("plowed"))
+			return true;
+		return false;
+	}
+
+	// =========================Aux==========================//
 	public int getX() {
 		return max_x;
 	}
@@ -183,6 +235,12 @@ public class Farm implements Observer {
 			return false;
 	}
 
+	private void addLand() {
+		for (int x = 0; x != max_x; x++)
+			for (int z = 0; z != max_y; z++)
+				images.add(new Land(new Point2D(x, z)));
+	}
+
 	// Não precisa de alterar nada a partir deste ponto
 	private void play() {
 		ImageMatrixGUI.getInstance().addObserver(this);
@@ -195,9 +253,8 @@ public class Farm implements Observer {
 	}
 
 	public static void main(String[] args) {
-		Farm f = new Farm(5, 5);
+		Farm f = new Farm(14, 14);
 		f.play();
-		// f.checkLand();
 	}
 
 }

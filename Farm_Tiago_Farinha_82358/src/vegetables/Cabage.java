@@ -3,7 +3,7 @@ package vegetables;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Cabage extends Vegetable {
-
+	
 	private static final int mature = 10;
 	private static final int rotten = 30;
 
@@ -20,6 +20,18 @@ public class Cabage extends Vegetable {
 			setEstado("bad_cabage");
 		else
 			setEstado("small_cabage");
+	}
+
+	@Override
+	public void addCiclo() {
+
+		if (getCuidado())
+			setCiclo(2);
+		else
+			setCiclo(1);
+		getStatus();
+		
+
 	}
 
 }

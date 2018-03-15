@@ -7,7 +7,6 @@ public class Plowed extends Land {
 	public Plowed(Point2D p) {
 		super(p);
 	}
-
 	
 	
 }

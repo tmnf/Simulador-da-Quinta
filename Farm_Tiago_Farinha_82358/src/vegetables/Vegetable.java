@@ -9,23 +9,18 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 
 	private String estado;
 	private int ciclos;
+	private boolean cuidado;
 	
 	public Vegetable(Point2D p) {
 		super(p);
 		getStatus();
+		cuidado = false;
 	}
 	
 	@Override
 	public int getLayer() {
-		return 1;
+		return 2;
 	}
-	
-	@Override
-	public void addCiclo() {
-		ciclos++;
-		getStatus();
-	}
-	
 	public int getCiclos() {
 		return ciclos;
 	}
@@ -37,6 +32,21 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 	public void setEstado(String state) {
 		estado=state;
 	}
+	@Override
+	public void takeCare() {
+		cuidado = true;
+	}
 	
-
+	public void setCiclo(int n) {
+		ciclos += n;
+	}
+	
+	public boolean getCuidado() {
+		return cuidado;
+	}
+	@Override
+	public void addCiclo() {
+		ciclos++;
+		getStatus();
+	}
 }
