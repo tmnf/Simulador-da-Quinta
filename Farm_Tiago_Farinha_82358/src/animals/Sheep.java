@@ -9,11 +9,12 @@ public class Sheep extends Animal {
 
 	private int ciclosCuidado;
 	private boolean moving;
-	
-	Point2D nova;
-	
-	private static final int Fome = 10;
-	private static final int faminto = 20;
+
+	private Point2D nova;
+	private Point2D atual;
+
+	private static final int Fome = 30;
+	private static final int faminto = 200;
 
 	public Sheep(Point2D p) {
 		super(p);
@@ -22,34 +23,43 @@ public class Sheep extends Animal {
 
 	@Override
 	public void getStatus() {
+		 if(getCuidado()) {
+			 Ciclo(0);
+			 setCuidado(false);
+		 }
+		
 		if (ciclosCuidado == Fome)
 			startMoving();
 		else if (getCiclos() >= faminto) {
 			setEstado("famished_sheep");
-			stopMoving();}
-		else
+			stopMoving();
+		} else
 			setEstado("sheep");
 	}
-	
+
 	@Override
 	public void addCiclo() {
 
 		if (getCuidado())
 			ciclosCuidado = 0;
-		else ciclosCuidado++;
+		else
+			ciclosCuidado++;
 
-			setCiclo(1);
-			getStatus();
+		setCiclo(1);
+		getStatus();
 	}
-	
+
 	public void Position() {
-		if(moving) {
+		if (moving) {
 			Random rnd = new Random();
-			Point2D atual = getPosition();
-			nova = atual.plus(new Vector2D(rnd.nextInt(2)-1,rnd.nextInt(2)-1));
-			move();
+			atual = getPosition();
+			nova = atual.plus(new Vector2D(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1));
+			if (isInside(nova))
+				move();
+			else Position();
 		}
 	}
+
 	public void move() {
 		setPosition(nova);
 	}
@@ -57,12 +67,9 @@ public class Sheep extends Animal {
 	public void startMoving() {
 		moving = true;
 	}
+
 	public void stopMoving() {
 		moving = false;
 	}
-	
-	
-	
-	
 
 }

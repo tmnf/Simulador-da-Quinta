@@ -1,9 +1,10 @@
 package interfaces;
 
+import objects.FarmObject;
+
 public interface Interactable {
 	
-	void getStatus();
-	void takeCare();
+	void interact();
 	
 
 }

@@ -6,6 +6,7 @@ import pt.iul.ista.poo.utils.Vector2D;
 import java.awt.Point;
 
 import farm.Farm;
+import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.utils.Direction;
 
 public class Farmer extends FarmObject {
@@ -46,8 +47,11 @@ public class Farmer extends FarmObject {
 	
 	
 	public void move() {
-		setPosition(nova);
+		if(isInside(nova))
+			setPosition(nova);
+		else return;
 	}
+
 
 	public Point2D getActual() {
 		return actual;
