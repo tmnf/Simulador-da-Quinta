@@ -1,10 +1,9 @@
 package objects;
 
-import farm.Farm;
+import interfaces.Interactable;
 import pt.iul.ista.poo.utils.Point2D;
-import vegetables.Vegetable;
 
-public class Land extends FarmObject{
+public class Land extends FarmObject implements Interactable{
 	
 	private String estado;
 

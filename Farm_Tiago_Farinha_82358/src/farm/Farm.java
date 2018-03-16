@@ -57,7 +57,7 @@ public class Farm implements Observer {
 
 		// Adicionar Imagens
 		farmer = new Farmer(new Point2D(0, 0));
-		sheep = new Sheep(new Point2D(7, 7));
+		sheep = new Sheep(new Point2D(max_x/2, max_y/2));
 
 		images.add(farmer);
 		images.add(sheep);
@@ -164,7 +164,7 @@ public class Farm implements Observer {
 	}
 
 	public static void main(String[] args) {
-		Farm f = new Farm(14, 14);
+		Farm f = new Farm(7, 5);
 		f.play();
 	}
 

@@ -1,12 +1,7 @@
 package objects;
 
 import pt.iul.ista.poo.utils.Point2D;
-import pt.iul.ista.poo.utils.Vector2D;
 
-import java.awt.Point;
-
-import farm.Farm;
-import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.utils.Direction;
 
 public class Farmer extends FarmObject {

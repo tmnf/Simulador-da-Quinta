@@ -13,8 +13,8 @@ public class Sheep extends Animal {
 	private Point2D nova;
 	private Point2D atual;
 
-	private static final int Fome = 30;
-	private static final int faminto = 200;
+	private static final int Fome = 10;
+	private static final int faminto = 20;
 
 	public Sheep(Point2D p) {
 		super(p);
