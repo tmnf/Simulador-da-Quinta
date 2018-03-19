@@ -23,11 +23,11 @@ public class Sheep extends Animal {
 
 	@Override
 	public void getStatus() {
-		 if(getCuidado()) {
-			 Ciclo(0);
-			 setCuidado(false);
-		 }
-		
+		if (getCuidado()) {
+			Ciclo(0);
+			setCuidado(false);
+		}
+
 		if (ciclosCuidado == Fome)
 			startMoving();
 		else if (getCiclos() >= faminto) {
@@ -56,7 +56,8 @@ public class Sheep extends Animal {
 			nova = atual.plus(new Vector2D(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1));
 			if (isInside(nova))
 				move();
-			else Position();
+			else
+				Position();
 		}
 	}
 

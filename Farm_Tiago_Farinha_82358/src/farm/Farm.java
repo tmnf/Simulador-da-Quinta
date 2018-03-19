@@ -48,16 +48,14 @@ public class Farm implements Observer {
 		ImageMatrixGUI.setSize(max_x, max_y);
 
 		loadScenario();
-
 	}
 
 	private void registerAll() {
 
 		images = new ArrayList<>();
 
-		// Adicionar Imagens
 		farmer = new Farmer(new Point2D(0, 0));
-		sheep = new Sheep(new Point2D(max_x/2, max_y/2));
+		sheep = new Sheep(new Point2D(max_x / 2, max_y / 2));
 
 		images.add(farmer);
 		images.add(sheep);
@@ -84,10 +82,9 @@ public class Farm implements Observer {
 			action(key);
 		else
 			justMove(key);
-		
+
 		sheep.Position();
 		addCycle();
-		
 
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + pontos);
 		ImageMatrixGUI.getInstance().update();
@@ -113,7 +110,7 @@ public class Farm implements Observer {
 		}
 	}
 
-	private void addCycle() {
+	private void addCycle() { // Verificar o ciclo dos vegetais(Haverá um metodo melhor para tal?)
 		for (FarmObject x : images)
 			if (x instanceof Updatable)
 				((Updatable) x).addCiclo();
@@ -122,6 +119,8 @@ public class Farm implements Observer {
 	// =====================Acções/Intereções========================//
 
 	private void doAction() {
+		// Fazer isto de modo a aplicar em todos os objectos na posição // Iterator(?)
+
 		FarmObject mod = null;
 		for (FarmObject x : images)
 			if (x.getPosition().equals(farmer.getNova()))
@@ -164,7 +163,7 @@ public class Farm implements Observer {
 	}
 
 	public static void main(String[] args) {
-		Farm f = new Farm(7, 5);
+		Farm f = new Farm(15, 15);
 		f.play();
 	}
 

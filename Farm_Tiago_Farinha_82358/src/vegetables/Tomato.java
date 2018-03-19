@@ -37,9 +37,6 @@ public class Tomato extends Vegetable {
 			setCiclo(1);
 			getStatus();
 		}
-
-		else
-			getStatus();
 	}
 
 }

@@ -8,10 +8,10 @@ public abstract class Animal extends Objeto {
 	public Animal(Point2D p) {
 		super(p);
 	}
-	
+
 	@Override
 	public int getLayer() {
 		return 2;
 	}
-	
+
 }

@@ -8,7 +8,7 @@ public class Farmer extends FarmObject {
 
 	private Point2D actual;
 	Point2D nova;
-	
+
 	public Farmer(Point2D p) {
 		super(p);
 	}
@@ -39,18 +39,18 @@ public class Farmer extends FarmObject {
 			return;
 		}
 	}
-	
-	
-	public void move() {
-		if(isInside(nova))
-			setPosition(nova);
-		else return;
-	}
 
+	public void move() {
+		if (isInside(nova))
+			setPosition(nova);
+		else
+			return;
+	}
 
 	public Point2D getActual() {
 		return actual;
 	}
+
 	public Point2D getNova() {
 		return nova;
 	}

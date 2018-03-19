@@ -3,8 +3,8 @@ package objects;
 import interfaces.Interactable;
 import pt.iul.ista.poo.utils.Point2D;
 
-public class Land extends FarmObject implements Interactable{
-	
+public class Land extends FarmObject implements Interactable {
+
 	private String estado;
 
 	public Land(Point2D p) {
@@ -16,8 +16,8 @@ public class Land extends FarmObject implements Interactable{
 	public String getName() {
 		return estado;
 	}
-	
-	public void setEstado(String state) {
-		estado=state;
+
+	public void setPlowed() {
+		estado = "plowed";
 	}
 }
