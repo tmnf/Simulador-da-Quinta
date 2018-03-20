@@ -7,14 +7,14 @@ import pt.iul.ista.poo.utils.Vector2D;
 
 public class Sheep extends Animal {
 
-	private int ciclosCuidado;
+	
 	private boolean moving;
 
 	private Point2D nova;
 	private Point2D atual;
 
 	private static final int Fome = 10;
-	private static final int faminto = 20;
+	private static final int faminto = 50;
 
 	public Sheep(Point2D p) {
 		super(p);
@@ -24,8 +24,8 @@ public class Sheep extends Animal {
 	@Override
 	public void updateStatus() {
 
-			System.out.println(ciclosCuidado);
-		if (ciclosCuidado == Fome)
+		System.out.println(getCiclosCuidado());
+		if (getCiclosCuidado() >= Fome)
 			startMoving();
 		else if (getCiclos() >= faminto) {
 			setEstado("famished_sheep");
@@ -39,10 +39,11 @@ public class Sheep extends Animal {
 
 		if (getCuidado()) {
 			Ciclo(0);
-			ciclosCuidado = 0;
+			setCiclosCuidado(0);
 			setCuidado(false);
+			stopMoving();
 		} else
-			ciclosCuidado++;
+			setCiclosCuidado(getCiclosCuidado()+1);
 
 		setCiclo(1);
 		Position();

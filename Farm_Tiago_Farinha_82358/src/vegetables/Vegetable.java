@@ -21,7 +21,7 @@ public abstract class Vegetable extends Objeto {
 		
 		if (getName().equals(Estado.RUINED.getState() + getClass().getSimpleName().toLowerCase())) 
 			remove();
-		else if (getName().equals(Estado.GROWN.getState() + getClass().getSimpleName().toLowerCase()))
+		else if (getName().equals(getClass().getSimpleName().toLowerCase()))
 			cut();
 		else if (getName().equals(Estado.SMALL.getState() + getClass().getSimpleName().toLowerCase()))
 			setCuidado(true);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import animals.Animal;
 import animals.Sheep;
 import interfaces.Interactable;
 import interfaces.Updatable;
@@ -85,6 +86,7 @@ public class Farm implements Observer {
 			justMove(key);
 
 		addCycle();
+		sheep.comer();//Fazer para todos os animais
 
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + pontos);
 		ImageMatrixGUI.getInstance().update();
@@ -111,11 +113,12 @@ public class Farm implements Observer {
 	}
 
 	private void addCycle() {
-		for (FarmObject x : images)
+		for (FarmObject x : images) {
 			if (x instanceof Updatable)
 				((Updatable) x).addCiclo();
-	}
+		}
 
+	}
 	// =====================Acções/Intereções========================//
 
 	private void doAction() {
@@ -159,6 +162,10 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) x);
 	}
 
+	public List<FarmObject> getLista() {
+		return images;
+	}
+
 	// Não precisa de alterar nada a partir deste ponto
 	private void play() {
 		ImageMatrixGUI.getInstance().addObserver(this);
@@ -171,7 +178,7 @@ public class Farm implements Observer {
 	}
 
 	public static void main(String[] args) {
-		Farm f = new Farm(15, 15);
+		Farm f = new Farm(5, 7);
 		f.play();
 	}
 

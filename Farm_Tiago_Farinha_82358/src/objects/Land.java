@@ -7,6 +7,7 @@ import interfaces.Interactable;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Cabage;
 import vegetables.Tomato;
+import vegetables.Vegetable;
 
 public class Land extends FarmObject implements Interactable {
 
@@ -29,6 +30,7 @@ public class Land extends FarmObject implements Interactable {
 
 	@Override
 	public void interact() {
+		plantado = isPlanted();
 		if (!plantado)
 			if (getName().equals("plowed"))
 				plant();
@@ -47,6 +49,12 @@ public class Land extends FarmObject implements Interactable {
 			Farm.getInstance().addImage(new Cabage(getPosition()));
 			break;
 		}
-		plantado = true;
+	}
+	
+	public boolean isPlanted() {
+		for(FarmObject x : Farm.getInstance().getLista())
+			if(x instanceof Vegetable && x.getPosition().equals(getPosition()))
+				return true;
+		return false;
 	}
 }
