@@ -22,12 +22,9 @@ public class Sheep extends Animal {
 	}
 
 	@Override
-	public void getStatus() {
-		if (getCuidado()) {
-			Ciclo(0);
-			setCuidado(false);
-		}
+	public void updateStatus() {
 
+			System.out.println(ciclosCuidado);
 		if (ciclosCuidado == Fome)
 			startMoving();
 		else if (getCiclos() >= faminto) {
@@ -40,13 +37,16 @@ public class Sheep extends Animal {
 	@Override
 	public void addCiclo() {
 
-		if (getCuidado())
+		if (getCuidado()) {
+			Ciclo(0);
 			ciclosCuidado = 0;
-		else
+			setCuidado(false);
+		} else
 			ciclosCuidado++;
 
 		setCiclo(1);
-		getStatus();
+		Position();
+		updateStatus();
 	}
 
 	public void Position() {

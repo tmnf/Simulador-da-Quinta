@@ -6,6 +6,7 @@ public class Cabage extends Vegetable {
 
 	private static final int mature = 10;
 	private static final int rotten = 30;
+	private static final int pontos = 3;
 
 	public Cabage(Point2D p) {
 		super(p);
@@ -13,7 +14,7 @@ public class Cabage extends Vegetable {
 	}
 
 	@Override
-	public void getStatus() {
+	public void updateStatus() {
 		if (getCiclos() > mature && getCiclos() < rotten)
 			setEstado("cabage");
 		else if (getCiclos() >= rotten)
@@ -29,8 +30,13 @@ public class Cabage extends Vegetable {
 			setCiclo(3);
 		else
 			setCiclo(1);
-		getStatus();
+		updateStatus();
 
+	}
+
+	@Override
+	public int getPontos() {
+		return pontos;
 	}
 
 }

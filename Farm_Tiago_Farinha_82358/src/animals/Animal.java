@@ -14,4 +14,9 @@ public abstract class Animal extends Objeto {
 		return 2;
 	}
 
+	@Override
+	public void interact() {
+		setCuidado(true);
+	}
+	
 }

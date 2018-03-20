@@ -12,7 +12,7 @@ public abstract class Objeto extends FarmObject implements Updatable, Interactab
 
 	public Objeto(Point2D p) {
 		super(p);
-		getStatus();
+		updateStatus();
 		cuidado = false;
 	}
 
@@ -40,7 +40,7 @@ public abstract class Objeto extends FarmObject implements Updatable, Interactab
 	@Override
 	public void addCiclo() {
 		ciclos++;
-		getStatus();
+		updateStatus();
 	}
 
 	public void setCuidado(boolean x) {
@@ -53,6 +53,6 @@ public abstract class Objeto extends FarmObject implements Updatable, Interactab
 
 	public void Ciclo(int n) {
 		ciclos = 0;
-		getStatus();
+		updateStatus();
 	}
 }

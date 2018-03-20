@@ -4,6 +4,6 @@ public interface Updatable {
 
 	void addCiclo();
 
-	void getStatus();
+	void updateStatus();
 
 }
