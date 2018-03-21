@@ -21,7 +21,9 @@ public class Farm implements Observer {
 
 	private Farmer farmer;
 	private Sheep sheep;
+
 	private List<FarmObject> images;
+	private ArrayList<Animal> animais;
 
 	private boolean action;
 	private int pontos;
@@ -86,13 +88,13 @@ public class Farm implements Observer {
 			justMove(key);
 
 		addCycle();
-		sheep.comer();//Fazer para todos os animais
+		feedIfPossible();
 
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + pontos);
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	// ============================Movimentos/TriggerAction/Ciclos)================//
+	// ============================Movimentos/TriggerAction/Ciclos/Alimentação)================//
 	private void action(int key) {
 
 		if (Direction.isDirection(key)) {
@@ -113,17 +115,28 @@ public class Farm implements Observer {
 	}
 
 	private void addCycle() {
-		for (FarmObject x : images) {
+		for (FarmObject x : images)
 			if (x instanceof Updatable)
 				((Updatable) x).addCiclo();
-		}
+	}
 
+	private void searchAnimals() {
+		animais = new ArrayList<>();
+		for (FarmObject x : images)
+			if (x instanceof Animal)
+				animais.add((Animal) x);
+	}
+
+	private void feedIfPossible() {
+		searchAnimals();
+		for (Animal x : animais)
+			x.comer();
 	}
 	// =====================Acções/Intereções========================//
 
 	private void doAction() {
 
-		ArrayList<FarmObject> toModify = new ArrayList<>();
+		ArrayList<FarmObject> toModify = new ArrayList<>(); // Passar para interactables
 		for (FarmObject x : images)
 			if (x.getPosition().equals(farmer.getNova()))
 				toModify.add(x);

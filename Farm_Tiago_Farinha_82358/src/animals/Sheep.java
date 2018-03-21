@@ -7,7 +7,6 @@ import pt.iul.ista.poo.utils.Vector2D;
 
 public class Sheep extends Animal {
 
-	
 	private boolean moving;
 
 	private Point2D nova;
@@ -43,14 +42,14 @@ public class Sheep extends Animal {
 			setCuidado(false);
 			stopMoving();
 		} else
-			setCiclosCuidado(getCiclosCuidado()+1);
+			setCiclosCuidado(getCiclosCuidado() + 1);
 
 		setCiclo(1);
 		Position();
 		updateStatus();
 	}
 
-	public void Position() {
+	private void Position() {
 		if (moving) {
 			Random rnd = new Random();
 			atual = getPosition();
@@ -62,15 +61,15 @@ public class Sheep extends Animal {
 		}
 	}
 
-	public void move() {
+	private void move() {
 		setPosition(nova);
 	}
 
-	public void startMoving() {
+	private void startMoving() {
 		moving = true;
 	}
 
-	public void stopMoving() {
+	private void stopMoving() {
 		moving = false;
 	}
 
