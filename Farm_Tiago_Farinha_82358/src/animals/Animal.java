@@ -22,7 +22,10 @@ public abstract class Animal extends Objeto {
 
 	@Override
 	public void interact() {
-		setCuidado(true);
+		if (getName().equals(getClass().getSimpleName().toLowerCase()))
+			setCuidado(true);
+		else
+			remove();
 	}
 
 	public void comer() {

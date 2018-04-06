@@ -18,8 +18,8 @@ public abstract class Vegetable extends Objeto {
 
 	@Override
 	public void interact() {
-		
-		if (getName().equals(Estado.RUINED.getState() + getClass().getSimpleName().toLowerCase())) 
+
+		if (getName().equals(Estado.RUINED.getState() + getClass().getSimpleName().toLowerCase()))
 			remove();
 		else if (getName().equals(getClass().getSimpleName().toLowerCase()))
 			cut();
@@ -28,12 +28,8 @@ public abstract class Vegetable extends Objeto {
 	}
 
 	public void cut() {
-		Farm.getInstance().addPontos(this.getPontos());
-		Farm.getInstance().removeImage(this);
-	}
-
-	public void remove() {
-		Farm.getInstance().removeImage(this);
+		Farm.getInstance().addPontos(getPontos());
+		remove();
 	}
 
 	public abstract int getPontos();

@@ -35,7 +35,7 @@ public class Tomato extends Vegetable {
 			if (getCuidado() == false) {
 				ciclosCuidado++;
 			}
-			setCiclo(1);
+			sumCicles(1);
 			updateStatus();
 		}
 	}

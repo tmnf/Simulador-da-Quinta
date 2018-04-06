@@ -12,39 +12,41 @@ public class Sheep extends Animal {
 	private Point2D nova;
 	private Point2D atual;
 
+	private boolean dead;
+
 	private static final int Fome = 10;
 	private static final int faminto = 50;
 
 	public Sheep(Point2D p) {
 		super(p);
-		moving = false;
 	}
 
 	@Override
 	public void updateStatus() {
 
-		System.out.println(getCiclosCuidado());
-		if (getCiclosCuidado() >= Fome)
-			startMoving();
-		else if (getCiclos() >= faminto) {
-			setEstado("famished_sheep");
-			stopMoving();
-		} else
-			setEstado("sheep");
+		if (!dead) { // Caso esteja morta nada aconteça
+			if (getCiclos() >= Fome && getCiclos() < faminto)
+				startMoving();
+			else if (getCiclos() >= faminto) {
+				setEstado("famished_sheep");
+				stopMoving();
+				dead = true;
+			} else
+				setEstado("sheep");
+		}
 	}
 
 	@Override
 	public void addCiclo() {
 
 		if (getCuidado()) {
-			Ciclo(0);
-			setCiclosCuidado(0);
+			resetCiclo();
 			setCuidado(false);
 			stopMoving();
 		} else
 			setCiclosCuidado(getCiclosCuidado() + 1);
 
-		setCiclo(1);
+		sumCicles(1);
 		Position();
 		updateStatus();
 	}

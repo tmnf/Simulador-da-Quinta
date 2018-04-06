@@ -1,5 +1,6 @@
 package objects;
 
+import farm.Farm;
 import interfaces.Interactable;
 import interfaces.Updatable;
 import pt.iul.ista.poo.utils.Point2D;
@@ -29,7 +30,7 @@ public abstract class Objeto extends FarmObject implements Updatable, Interactab
 		estado = state;
 	}
 
-	public void setCiclo(int n) {
+	public void sumCicles(int n) {
 		ciclos += n;
 	}
 
@@ -51,8 +52,13 @@ public abstract class Objeto extends FarmObject implements Updatable, Interactab
 		cuidado = true;
 	}
 
-	public void Ciclo(int n) {
+	public void resetCiclo() {
 		ciclos = 0;
 		updateStatus();
 	}
+
+	public void remove() {
+		Farm.getInstance().removeImage(this);
+	}
+
 }

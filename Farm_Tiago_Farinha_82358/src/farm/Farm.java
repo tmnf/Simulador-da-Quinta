@@ -28,7 +28,7 @@ public class Farm implements Observer {
 	private boolean action;
 	private int pontos;
 
-	private static final String SAVE_FNAME = "config/savedGame";
+	// private static final String SAVE_FNAME = "config/savedGame";
 
 	private static final int MIN_X = 5;
 	private static final int MIN_Y = 5;
@@ -39,7 +39,7 @@ public class Farm implements Observer {
 	private int max_y;
 
 	private Farm(int max_x, int max_y) {
-		if (max_x < 5 || max_y < 5)
+		if (max_x < MIN_X || max_y < MIN_Y)
 			throw new IllegalArgumentException();
 
 		action = false;
@@ -77,10 +77,13 @@ public class Farm implements Observer {
 
 	@Override
 	public void update(Observable gui, Object a) {
-
 		int key = (Integer) a;
-		if (key == 32)
+
+		if (key == 32) // Iniciar acção
 			action = true;
+
+		if (key == 80) // Adicionar ovelha inGame
+			addImage(new Sheep(new Point2D(0, 0)));
 
 		if (action == true)
 			action(key);
@@ -120,14 +123,14 @@ public class Farm implements Observer {
 				((Updatable) x).addCiclo();
 	}
 
-	private void searchAnimals() {
+	private void searchAnimals() {	//Procurar todos os animais atualmente em jogo
 		animais = new ArrayList<>();
 		for (FarmObject x : images)
 			if (x instanceof Animal)
 				animais.add((Animal) x);
 	}
 
-	private void feedIfPossible() {
+	private void feedIfPossible() { //Alimentar todos caso seja possivel no local em que estao
 		searchAnimals();
 		for (Animal x : animais)
 			x.comer();
@@ -136,7 +139,7 @@ public class Farm implements Observer {
 
 	private void doAction() {
 
-		ArrayList<FarmObject> toModify = new ArrayList<>(); // Passar para interactables
+		ArrayList<FarmObject> toModify = new ArrayList<>();
 		for (FarmObject x : images)
 			if (x.getPosition().equals(farmer.getNova()))
 				toModify.add(x);

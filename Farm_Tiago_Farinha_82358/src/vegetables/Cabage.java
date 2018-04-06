@@ -27,9 +27,9 @@ public class Cabage extends Vegetable {
 	public void addCiclo() {
 
 		if (getCuidado())
-			setCiclo(3);
+			sumCicles(3);
 		else
-			setCiclo(1);
+			sumCicles(1);
 		updateStatus();
 
 	}
