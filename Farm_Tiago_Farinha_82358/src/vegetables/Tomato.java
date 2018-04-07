@@ -9,20 +9,11 @@ public class Tomato extends Vegetable {
 	private static final int stopsGrowing = 10;
 	private static final int mature = 15;
 	private static final int rotten = 25;
+
 	private static final int pontos = 2;
 
 	public Tomato(Point2D p) {
 		super(p);
-	}
-
-	@Override
-	public void updateStatus() {
-		if (getCiclos() >= mature && getCiclos() < rotten)
-			setEstado("tomato");
-		else if (getCiclos() >= rotten)
-			setEstado("bad_tomato");
-		else
-			setEstado("small_tomato");
 	}
 
 	@Override
@@ -39,10 +30,20 @@ public class Tomato extends Vegetable {
 			updateStatus();
 		}
 	}
-	
+
 	@Override
 	public int getPontos() {
 		return pontos;
+	}
+
+	@Override
+	public int getRotten() {
+		return rotten;
+	}
+
+	@Override
+	public int getMature() {
+		return mature;
 	}
 
 }

@@ -17,6 +17,16 @@ public abstract class Vegetable extends Objeto {
 	}
 
 	@Override
+	public void updateStatus() {
+		if (getCiclos() >= getMature() && getCiclos() < getRotten())
+			setEstado(getClass().getSimpleName().toLowerCase());
+		else if (getCiclos() >= getRotten())
+			setEstado(Estado.RUINED.getState() + getClass().getSimpleName().toLowerCase());
+		else
+			setEstado(Estado.SMALL.getState() + getClass().getSimpleName().toLowerCase());
+	}
+
+	@Override
 	public void interact() {
 
 		if (getName().equals(Estado.RUINED.getState() + getClass().getSimpleName().toLowerCase()))
@@ -33,5 +43,9 @@ public abstract class Vegetable extends Objeto {
 	}
 
 	public abstract int getPontos();
+
+	public abstract int getRotten();
+
+	public abstract int getMature();
 
 }

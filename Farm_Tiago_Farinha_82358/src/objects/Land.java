@@ -51,7 +51,7 @@ public class Land extends FarmObject implements Interactable {
 		}
 	}
 	
-	public boolean isPlanted() {
+	private boolean isPlanted() {
 		for(FarmObject x : Farm.getInstance().getLista())
 			if(x instanceof Vegetable && x.getPosition().equals(getPosition()))
 				return true;

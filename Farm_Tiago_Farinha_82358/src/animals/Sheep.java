@@ -24,7 +24,7 @@ public class Sheep extends Animal {
 	@Override
 	public void updateStatus() {
 
-		if (!dead) { // Caso esteja morta nada aconteça
+		if (!dead) { // Caso esteja morta nada acontece
 			if (getCiclos() >= Fome && getCiclos() < faminto)
 				startMoving();
 			else if (getCiclos() >= faminto) {
