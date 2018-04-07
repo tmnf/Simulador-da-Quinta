@@ -82,7 +82,7 @@ public class Farm implements Observer {
 		if (key == 32) // Iniciar acção
 			action = true;
 
-		if (key == 80) // Adicionar ovelha inGame
+		if (key == 80) // Adicionar ovelha inGame pressionando a tecla "P"
 			addImage(new Sheep(new Point2D(0, 0)));
 
 		if (action == true)
