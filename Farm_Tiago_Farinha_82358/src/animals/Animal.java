@@ -25,7 +25,7 @@ public abstract class Animal extends Objeto {
 		if (getName().equals(getClass().getSimpleName().toLowerCase()))
 			setCuidado(true);
 		else
-			remove();
+			remove(); //Caso a ovelha tenha morrido, é removida do jogo
 	}
 
 	public void comer() {

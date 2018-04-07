@@ -123,14 +123,14 @@ public class Farm implements Observer {
 				((Updatable) x).addCiclo();
 	}
 
-	private void searchAnimals() {	//Procurar todos os animais atualmente em jogo
+	private void searchAnimals() { // Procurar todos os animais atualmente em jogo
 		animais = new ArrayList<>();
 		for (FarmObject x : images)
 			if (x instanceof Animal)
 				animais.add((Animal) x);
 	}
 
-	private void feedIfPossible() { //Alimentar todos caso seja possivel no local em que estao
+	private void feedIfPossible() { // Alimentar todos caso seja possivel no local em que estao
 		searchAnimals();
 		for (Animal x : animais)
 			x.comer();
