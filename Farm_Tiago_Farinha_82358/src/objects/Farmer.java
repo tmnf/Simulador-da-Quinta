@@ -20,7 +20,6 @@ public class Farmer extends FarmObject {
 
 	public void Position(Direction x) {
 		actual = getPosition();
-		nova = null;
 
 		switch (x) {
 		case LEFT:
@@ -45,10 +44,6 @@ public class Farmer extends FarmObject {
 			setPosition(nova);
 		else
 			return;
-	}
-
-	public Point2D getActual() {
-		return actual;
 	}
 
 	public Point2D getNova() {

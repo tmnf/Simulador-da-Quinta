@@ -2,11 +2,11 @@ package animals;
 
 import farm.Farm;
 import objects.FarmObject;
-import objects.Objeto;
+import objects.ObjectStatus;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Vegetable;
 
-public abstract class Animal extends Objeto {
+public abstract class Animal extends ObjectStatus {
 
 	private int ciclosCuidado;
 	private Vegetable vegetal;

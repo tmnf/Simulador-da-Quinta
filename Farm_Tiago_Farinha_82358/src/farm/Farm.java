@@ -25,6 +25,9 @@ public class Farm implements Observer {
 	private List<FarmObject> images;
 	private ArrayList<Animal> animais;
 
+	public static final int SPACE = 32;
+	public static final int P = 80;
+
 	private boolean action;
 	private int pontos;
 
@@ -79,10 +82,10 @@ public class Farm implements Observer {
 	public void update(Observable gui, Object a) {
 		int key = (Integer) a;
 
-		if (key == 32) // Iniciar acção
+		if (key == SPACE) // Iniciar acção
 			action = true;
 
-		if (key == 80) // Adicionar ovelha inGame pressionando a tecla "P"
+		if (key == P) // Adicionar ovelha inGame pressionando a tecla "P"
 			addImage(new Sheep(new Point2D(0, 0)));
 
 		if (action == true)

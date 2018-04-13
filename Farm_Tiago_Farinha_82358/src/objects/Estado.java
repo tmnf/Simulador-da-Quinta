@@ -9,7 +9,7 @@ public enum Estado {
 		this.state = state;
 	}
 	
-	public String getState() {
+	public String getPrefix() {
 		return state;
 	}
 	

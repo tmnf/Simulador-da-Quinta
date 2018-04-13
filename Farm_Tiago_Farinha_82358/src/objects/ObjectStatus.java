@@ -5,13 +5,13 @@ import interfaces.Interactable;
 import interfaces.Updatable;
 import pt.iul.ista.poo.utils.Point2D;
 
-public abstract class Objeto extends FarmObject implements Updatable, Interactable {
+public abstract class ObjectStatus extends FarmObject implements Updatable, Interactable {
 
 	private String estado;
 	private int ciclos;
 	private boolean cuidado;
 
-	public Objeto(Point2D p) {
+	public ObjectStatus(Point2D p) {
 		super(p);
 		updateStatus();
 		cuidado = false;
