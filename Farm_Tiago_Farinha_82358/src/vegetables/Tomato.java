@@ -1,14 +1,12 @@
 package vegetables;
 
+import objects.Estado;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Tomato extends Vegetable {
 
-	private int ciclosCuidado;
-
-	private static final int stopsGrowing = 10;
-	private static final int mature = 15;
-	private static final int rotten = 25;
+	private static final int MATURE = 15;
+	private static final int ROTTEN = 25;
 
 	private static final int pontos = 2;
 
@@ -18,17 +16,18 @@ public class Tomato extends Vegetable {
 
 	@Override
 	public void addCiclo() {
+		sumCicles(1);
+		updateStatus();
+	}
 
-		if (getCuidado())
-			ciclosCuidado = 0;
-
-		if (ciclosCuidado < stopsGrowing) {
-			if (getCuidado() == false) {
-				ciclosCuidado++;
-			}
-			sumCicles(1);
-			updateStatus();
-		}
+	@Override
+	public void updateStatus() {
+		if (getCiclos() >= getMature() && getCiclos() < getRotten()  && getCuidado())
+			setEstado(getClass().getSimpleName().toLowerCase());
+		else if (getCiclos() >= getRotten())
+			setEstado(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase());
+		else
+			setEstado(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase());
 	}
 
 	@Override
@@ -38,12 +37,17 @@ public class Tomato extends Vegetable {
 
 	@Override
 	public int getRotten() {
-		return rotten;
+		return ROTTEN;
 	}
 
 	@Override
 	public int getMature() {
-		return mature;
+		return MATURE;
+	}
+	@Override
+	public void takeCare() {
+		setCuidado(true);
+		sumCicles(1);
 	}
 
 }

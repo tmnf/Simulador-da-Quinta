@@ -29,6 +29,9 @@ public abstract class ObjectStatus extends FarmObject implements Updatable, Inte
 	public void setEstado(String state) {
 		estado = state;
 	}
+	public String getEstado(){
+		return estado;
+	}
 
 	public void sumCicles(int n) {
 		ciclos += n;

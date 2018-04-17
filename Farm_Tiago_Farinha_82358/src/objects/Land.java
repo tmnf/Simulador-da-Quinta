@@ -5,14 +5,13 @@ import java.util.Random;
 import farm.Farm;
 import interfaces.Interactable;
 import pt.iul.ista.poo.utils.Point2D;
-import vegetables.Cabage;
+import vegetables.Cabbage;
 import vegetables.Tomato;
 import vegetables.Vegetable;
 
 public class Land extends FarmObject implements Interactable {
 
 	private String estado;
-	private boolean plantado;
 
 	public Land(Point2D p) {
 		super(p);
@@ -24,18 +23,17 @@ public class Land extends FarmObject implements Interactable {
 		return estado;
 	}
 
-	public void setPlowed() {
-		estado = "plowed";
+	public void setUnplowed() {
+		estado = "land";
 	}
 
 	@Override
 	public void interact() {
-		plantado = isPlanted();
-		if (!plantado)
-			if (getName().equals("plowed"))
+		if (!isPlanted())
+			if (getName().equals("plowed")) {
 				plant();
-			else
-				setPlowed();
+			} else
+				estado = "plowed";
 	}
 
 	public void plant() {
@@ -46,15 +44,16 @@ public class Land extends FarmObject implements Interactable {
 			Farm.getInstance().addImage(new Tomato(getPosition()));
 			break;
 		default:
-			Farm.getInstance().addImage(new Cabage(getPosition()));
+			Farm.getInstance().addImage(new Cabbage(getPosition()));
 			break;
 		}
 	}
-	
+
 	private boolean isPlanted() {
-		for(FarmObject x : Farm.getInstance().getLista())
-			if(x instanceof Vegetable && x.getPosition().equals(getPosition()))
+		for (FarmObject x : Farm.getInstance().getLista())
+			if (x instanceof Vegetable && x.getPosition().equals(getPosition()))
 				return true;
 		return false;
 	}
+
 }

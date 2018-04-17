@@ -1,15 +1,23 @@
 package animals;
 
+import java.util.Random;
+
 import farm.Farm;
 import objects.FarmObject;
 import objects.ObjectStatus;
 import pt.iul.ista.poo.utils.Point2D;
+import pt.iul.ista.poo.utils.Vector2D;
 import vegetables.Vegetable;
 
 public abstract class Animal extends ObjectStatus {
 
-	private int ciclosCuidado;
 	private Vegetable vegetal;
+
+	private boolean moving;
+
+	private Point2D nova;
+	private Point2D atual;
+
 
 	public Animal(Point2D p) {
 		super(p);
@@ -20,14 +28,6 @@ public abstract class Animal extends ObjectStatus {
 		return 2;
 	}
 
-	@Override
-	public void interact() {
-		if (getName().equals(getClass().getSimpleName().toLowerCase()))
-			setCuidado(true);
-		else
-			remove(); //Caso a ovelha tenha morrido, é removida do jogo
-	}
-
 	public void comer() {
 		if (podeComer()) {
 			vegetal.remove();
@@ -35,7 +35,7 @@ public abstract class Animal extends ObjectStatus {
 		}
 	}
 
-	private boolean podeComer() {
+	public boolean podeComer() {
 		for (FarmObject x : Farm.getInstance().getLista())
 			if (x.getPosition().equals(this.getPosition()))
 				if (x instanceof Vegetable)
@@ -45,13 +45,33 @@ public abstract class Animal extends ObjectStatus {
 					}
 		return false;
 	}
-
-	public int getCiclosCuidado() {
-		return ciclosCuidado;
+	public void setVegetal(Vegetable x) {
+		vegetal = x;
 	}
 
-	public void setCiclosCuidado(int n) {
-		ciclosCuidado = n;
+	public void Position() {
+		if (moving) {
+			Random rnd = new Random();
+			atual = getPosition();
+			nova = atual.plus(new Vector2D(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1));
+			if (isInside(nova))
+				move();
+			else
+				Position();
+		}
 	}
+
+	public void move() {
+		setPosition(nova);
+	}
+
+	public void startMoving() {
+		moving = true;
+	}
+
+	public void stopMoving() {
+		moving = false;
+	}
+
 
 }
