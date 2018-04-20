@@ -1,10 +1,10 @@
 package objects;
 
-import pt.iul.ista.poo.utils.Point2D;
 import farm.Farm;
 import pt.iul.ista.poo.utils.Direction;
+import pt.iul.ista.poo.utils.Point2D;
 
-public class Farmer extends FarmObject {
+public class Farmer extends FarmObject{
 
 	private Point2D actual;
 	Point2D nova;

@@ -1,7 +1,9 @@
 package farm;
 
+import java.awt.Dimension;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -37,13 +39,13 @@ public class Farm implements Observer, Serializable {
 	public static final int S = 83;
 	public static final int I = 73;
 
-	private int[] dimension;
+	private Dimension dimension;
 
 	private boolean action;
 	private int pontos;
 
 	private static final String CONFIG = "Configs/config.txt";
-	private static final String SAVE = "Configs/savedGame.dat";
+	private static final String SAVE = "Configs/savedGame.sav";
 
 	private static final int MIN_X = 5;
 	private static final int MIN_Y = 5;
@@ -62,13 +64,10 @@ public class Farm implements Observer, Serializable {
 		this.max_x = max_x;
 		this.max_y = max_y;
 
-		dimension = new int[2];
-		dimension[0] = max_x;
-		dimension[1] = max_y;
-
 		INSTANCE = this;
 
 		ImageMatrixGUI.setSize(max_x, max_y);
+		dimension = ImageMatrixGUI.getInstance().getGridDimension();
 
 		loadScenario();
 	}
@@ -80,16 +79,14 @@ public class Farm implements Observer, Serializable {
 
 		farmer = new Farmer(new Point2D(0, 0));
 
-		images.add(farmer);
+		addImage(farmer);
 
 		Random rnd = new Random();
 		for (int a = 0; a != 2; a++) { // Adicionar 2 de cada
-			images.add(new Sheep(new Point2D(rnd.nextInt(max_x), rnd.nextInt(max_y))));
-			images.add(new Chicken(new Point2D(rnd.nextInt(max_x), rnd.nextInt(max_y))));
+			addImage(new Sheep(new Point2D(rnd.nextInt(max_x), rnd.nextInt(max_y))));
+			addImage(new Chicken(new Point2D(rnd.nextInt(max_x), rnd.nextInt(max_y))));
 		}
 		addLand();
-		addImagesToGUI();
-
 	}
 
 	@Override
@@ -147,9 +144,12 @@ public class Farm implements Observer, Serializable {
 
 	private ArrayList<Animal> searchAnimals() { // Procurar todos os animais atualmente em jogo
 		ArrayList<Animal> animais = new ArrayList<>();
-		for (FarmObject x : images)
+		Iterator<FarmObject> it = images.iterator();
+		while (it.hasNext()) {
+			FarmObject x = it.next();
 			if (x instanceof Animal)
 				animais.add((Animal) x);
+		}
 		return animais;
 	}
 
@@ -202,13 +202,6 @@ public class Farm implements Observer, Serializable {
 	}
 
 	// =========================Aux==========================//
-
-	private void addImagesToGUI() {
-		for (FarmObject x : images)
-			ImageMatrixGUI.getInstance().addImage((ImageTile) x);
-		ImageMatrixGUI.getInstance().update();
-	}
-
 	private void loadScenario() {
 		registerAll();
 	}
@@ -231,6 +224,11 @@ public class Farm implements Observer, Serializable {
 		ImageMatrixGUI.getInstance().addImage((ImageTile) x);
 	}
 
+	public void addImages(List<FarmObject> list) {
+		for (FarmObject x : list)
+			addImage(x);
+	}
+
 	public void removeImage(FarmObject x) {
 		images.remove(x);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) x);
@@ -238,17 +236,17 @@ public class Farm implements Observer, Serializable {
 
 	public void loadGame() {
 		Farm loaded = Save.loadGame(SAVE);
-		if (dimension[0] == loaded.getDim()[0] && dimension[1] == loaded.getDim()[1]) {
+		if (dimension.equals(loaded.getDim())) {
 			ImageMatrixGUI.getInstance().clearImages();
-			images = loaded.getLista();
+			images = new ArrayList<>();
+			addImages(loaded.getLista());
 			farmer = loaded.getFarmer();
 			pontos = loaded.getPontos();
 			System.out.println("Jogo carregado com sucesso.");
-			addImagesToGUI();
 		} else {
-			System.out.println("Dimensões incompativeis; Ficheiro gravado : " + loaded.getDim()[0] + "x"
-					+ loaded.getDim()[1] + "\n" + "Este ficheiro: " + dimension[0] + "x" + dimension[1]);
-			return;
+			System.out.println("Dimensões incompativeis; Ficheiro gravado : " + (int) loaded.getDim().getWidth() + "x"
+					+ (int) loaded.getDim().getHeight() + "\n" + "Este ficheiro: " + dimension.width + "x"
+					+ dimension.height);
 		}
 	}
 
@@ -265,7 +263,7 @@ public class Farm implements Observer, Serializable {
 		return pontos;
 	}
 
-	public int[] getDim() {
+	public Dimension getDim() {
 		return dimension;
 	}
 

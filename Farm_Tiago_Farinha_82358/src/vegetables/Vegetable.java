@@ -32,7 +32,7 @@ public abstract class Vegetable extends ObjectStatus {
 	public void interact() {
 
 		if (getName().equals(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase())) {
-			landToUnplow().setUnplowed();
+			UnplowLand();
 			remove();
 		} else if (getName().equals(getClass().getSimpleName().toLowerCase()))
 			cut();
@@ -43,17 +43,16 @@ public abstract class Vegetable extends ObjectStatus {
 	public void cut() {
 		Farm.getInstance().addPontos(getPontos());
 		remove();
-		landToUnplow().setUnplowed();
+		UnplowLand();
 	}
 	public void takeCare() {
 		setCuidado(true);
 	}
 
-	private Land landToUnplow() {
+	private void UnplowLand() {
 		for (FarmObject x : Farm.getInstance().getLista())
 			if (x instanceof Land && x.getPosition().equals(getPosition()))
-				return (Land) x;
-		return null;
+				((Land) x).setUnplowed();;
 	}
 
 	public abstract int getPontos();

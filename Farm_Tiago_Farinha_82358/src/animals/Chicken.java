@@ -31,8 +31,6 @@ public class Chicken extends Animal {
 		if (getCiclos() == OVO) {
 			resetCiclo();
 			Position();
-			while (!isInside(getNova()))
-				Position();
 			Farm.getInstance().addToBuffer(new Egg(getNova()));
 		}
 
@@ -41,13 +39,14 @@ public class Chicken extends Animal {
 	@Override
 	public boolean podeComer() {
 		for (FarmObject x : Farm.getInstance().getLista())
-			if (x.getPosition().equals(this.getPosition()))
-				if (x instanceof Tomato)
-					if (x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
-						setVegetal((Vegetable) x);
-						return true;
-					}
+			if (x.getPosition().equals(this.getPosition()) && x instanceof Tomato
+					&& x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
+				
+				setVegetal((Vegetable) x);
+				return true;
+			}
 		return false;
+
 	}
 
 	@Override

@@ -34,7 +34,6 @@ public class Save {
 		try {
 			FileInputStream saveGame = new FileInputStream(save);
 			ObjectInputStream objInput = new ObjectInputStream(saveGame);
-			// list = (ArrayList<FarmObject>) objInput.readObject();
 			farm = (Farm) objInput.readObject();
 			objInput.close();
 			saveGame.close();

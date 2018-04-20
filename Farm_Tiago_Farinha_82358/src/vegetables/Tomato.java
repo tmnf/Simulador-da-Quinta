@@ -15,12 +15,6 @@ public class Tomato extends Vegetable {
 	}
 
 	@Override
-	public void addCiclo() {
-		sumCicles(1);
-		updateStatus();
-	}
-
-	@Override
 	public void updateStatus() {
 		if (getCiclos() >= getMature() && getCiclos() < getRotten()  && getCuidado())
 			setEstado(getClass().getSimpleName().toLowerCase());

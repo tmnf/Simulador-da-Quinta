@@ -17,8 +17,6 @@ public class Egg extends Animal {
 	public void updateStatus() {
 		if (getCiclos() >= ECLODE) {
 			Position();
-			while (!isInside(getNova()))
-				Position();
 			Farm.getInstance().addToBuffer(new Chicken(getNova()));
 			Farm.getInstance().addToTrash(this);
 		}

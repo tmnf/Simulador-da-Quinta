@@ -6,8 +6,8 @@ import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Point2D;
 
-@SuppressWarnings("serial")
-public abstract class FarmObject implements ImageTile, Serializable {
+
+public abstract class FarmObject implements ImageTile, Serializable{
 
 	private Point2D position;
 
