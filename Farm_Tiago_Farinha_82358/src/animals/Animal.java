@@ -18,7 +18,6 @@ public abstract class Animal extends ObjectStatus {
 	private Point2D nova;
 	private Point2D atual;
 
-
 	public Animal(Point2D p) {
 		super(p);
 	}
@@ -45,24 +44,26 @@ public abstract class Animal extends ObjectStatus {
 					}
 		return false;
 	}
+
 	public void setVegetal(Vegetable x) {
 		vegetal = x;
 	}
 
 	public void Position() {
-		if (moving) {
-			Random rnd = new Random();
-			atual = getPosition();
-			nova = atual.plus(new Vector2D(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1));
-			if (isInside(nova))
-				move();
-			else
-				Position();
-		}
+		Random rnd = new Random();
+		atual = getPosition();
+		nova = atual.plus(new Vector2D(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1));
 	}
 
 	public void move() {
-		setPosition(nova);
+		if (moving) {
+			Position();
+			while (!isInside(nova))
+				Position();
+
+			if (!(Farm.getInstance().colides(nova)))
+				setPosition(nova);
+		}
 	}
 
 	public void startMoving() {
@@ -72,6 +73,8 @@ public abstract class Animal extends ObjectStatus {
 	public void stopMoving() {
 		moving = false;
 	}
-
+	public Point2D getNova() {
+		return nova;
+	}
 
 }

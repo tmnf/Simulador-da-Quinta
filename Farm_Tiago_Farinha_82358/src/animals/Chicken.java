@@ -15,25 +15,29 @@ public class Chicken extends Animal {
 
 	public Chicken(Point2D p) {
 		super(p);
-		contaCiclo = 0;
+		setEstado("chicken");
 	}
 
 	@Override
 	public void updateStatus() {
 		if (contaCiclo == 2) {
 			startMoving();
-			Position();
+			move();
 			stopMoving();
 			contaCiclo = 0;
 		}
-//		if (getCiclos() == OVO) {
-//			Farm.getInstance().addImage(new Egg(getPosition()));
-//			resetCiclo();
-//		}
 		contaCiclo++;
-		setEstado("chicken");
+
+		if (getCiclos() == OVO) {
+			resetCiclo();
+			Position();
+			while (!isInside(getNova()))
+				Position();
+			Farm.getInstance().addToBuffer(new Egg(getNova()));
+		}
+
 	}
-	
+
 	@Override
 	public boolean podeComer() {
 		for (FarmObject x : Farm.getInstance().getLista())

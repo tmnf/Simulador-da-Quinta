@@ -1,13 +1,11 @@
 package farm;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
-import java.util.Scanner;
 
 import animals.Animal;
 import animals.Chicken;
@@ -25,20 +23,27 @@ import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Vegetable;
 
-public class Farm implements Observer {
+@SuppressWarnings("serial")
+public class Farm implements Observer, Serializable {
 
 	private Farmer farmer;
 
 	private List<FarmObject> images;
-	private ArrayList<Animal> animais;
+
+	private List<FarmObject> buffer;
+	private List<FarmObject> toRemove;
 
 	public static final int SPACE = 32;
-	public static final int P = 80;
+	public static final int S = 83;
+	public static final int I = 73;
+
+	private int[] dimension;
 
 	private boolean action;
 	private int pontos;
 
 	private static final String CONFIG = "Configs/config.txt";
+	private static final String SAVE = "Configs/savedGame.dat";
 
 	private static final int MIN_X = 5;
 	private static final int MIN_Y = 5;
@@ -57,6 +62,10 @@ public class Farm implements Observer {
 		this.max_x = max_x;
 		this.max_y = max_y;
 
+		dimension = new int[2];
+		dimension[0] = max_x;
+		dimension[1] = max_y;
+
 		INSTANCE = this;
 
 		ImageMatrixGUI.setSize(max_x, max_y);
@@ -66,25 +75,21 @@ public class Farm implements Observer {
 
 	private void registerAll() {
 		images = new ArrayList<>();
+		buffer = new ArrayList<>();
+		toRemove = new ArrayList<>();
 
 		farmer = new Farmer(new Point2D(0, 0));
 
 		images.add(farmer);
 
 		Random rnd = new Random();
-		for (int a = 0; a != 2; a++) {
+		for (int a = 0; a != 2; a++) { // Adicionar 2 de cada
 			images.add(new Sheep(new Point2D(rnd.nextInt(max_x), rnd.nextInt(max_y))));
 			images.add(new Chicken(new Point2D(rnd.nextInt(max_x), rnd.nextInt(max_y))));
 		}
 		addLand();
+		addImagesToGUI();
 
-		for (FarmObject x : images)
-			ImageMatrixGUI.getInstance().addImage((ImageTile) x);
-		ImageMatrixGUI.getInstance().update();
-	}
-
-	private void loadScenario() {
-		registerAll();
 	}
 
 	@Override
@@ -94,8 +99,11 @@ public class Farm implements Observer {
 		if (key == SPACE) // Iniciar acção
 			action = true;
 
-		if (key == P) 
-			addImage(new Egg(new Point2D(0, 0)));
+		if (key == S)
+			Save.saveGame(SAVE);
+		if (key == I) {
+			loadGame();
+		}
 
 		if (action == true)
 			action(key);
@@ -103,6 +111,8 @@ public class Farm implements Observer {
 			justMove(key);
 
 		feedIfPossible();
+		releaseBuffer();
+		removeFromGame();
 
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + pontos);
 		ImageMatrixGUI.getInstance().update();
@@ -135,16 +145,16 @@ public class Farm implements Observer {
 				((Updatable) x).addCiclo();
 	}
 
-	private void searchAnimals() { // Procurar todos os animais atualmente em jogo
-		animais = new ArrayList<>();
+	private ArrayList<Animal> searchAnimals() { // Procurar todos os animais atualmente em jogo
+		ArrayList<Animal> animais = new ArrayList<>();
 		for (FarmObject x : images)
 			if (x instanceof Animal)
 				animais.add((Animal) x);
+		return animais;
 	}
 
 	private void feedIfPossible() { // Alimentar todos caso seja possivel no local em que estao
-		searchAnimals();
-		for (Animal x : animais)
+		for (Animal x : searchAnimals())
 			x.comer();
 	}
 	// =====================Acções/Intereções========================//
@@ -160,7 +170,7 @@ public class Farm implements Observer {
 
 	}
 
-	private void applyAction(List<FarmObject> lista) {
+	private void applyAction(List<FarmObject> lista) { // Melhor Metodo para isto???
 
 		for (FarmObject x : lista) {
 			if (x instanceof Animal) {
@@ -193,6 +203,16 @@ public class Farm implements Observer {
 
 	// =========================Aux==========================//
 
+	private void addImagesToGUI() {
+		for (FarmObject x : images)
+			ImageMatrixGUI.getInstance().addImage((ImageTile) x);
+		ImageMatrixGUI.getInstance().update();
+	}
+
+	private void loadScenario() {
+		registerAll();
+	}
+
 	public void addPontos(int p) {
 		pontos += p;
 	}
@@ -216,24 +236,66 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) x);
 	}
 
+	public void loadGame() {
+		Farm loaded = Save.loadGame(SAVE);
+		if (dimension[0] == loaded.getDim()[0] && dimension[1] == loaded.getDim()[1]) {
+			ImageMatrixGUI.getInstance().clearImages();
+			images = loaded.getLista();
+			farmer = loaded.getFarmer();
+			pontos = loaded.getPontos();
+			System.out.println("Jogo carregado com sucesso.");
+			addImagesToGUI();
+		} else {
+			System.out.println("Dimensões incompativeis; Ficheiro gravado : " + loaded.getDim()[0] + "x"
+					+ loaded.getDim()[1] + "\n" + "Este ficheiro: " + dimension[0] + "x" + dimension[1]);
+			return;
+		}
+	}
+
+	// Getters//////////////////////
 	public List<FarmObject> getLista() {
 		return images;
 	}
 
-	public static String[] readFile(String s) {
-		String[] info = new String[100];
-		try {
-			Scanner fileScanner = new Scanner(new File(s));
-			int i = 0;
-			while (fileScanner.hasNext()) {
-				info[i] = fileScanner.next();
-				i++;
-			}
-			fileScanner.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Ficheiro não encontrado.");
-		}
-		return info;
+	public Farmer getFarmer() {
+		return farmer;
+	}
+
+	public int getPontos() {
+		return pontos;
+	}
+
+	public int[] getDim() {
+		return dimension;
+	}
+
+	// Verificar estes metodos.=============================================
+	public void addToBuffer(FarmObject x) {
+		buffer.add(x);
+	}
+
+	public void releaseBuffer() {
+		for (FarmObject x : buffer)
+			addImage(x);
+		buffer = new ArrayList<>();
+	}
+
+	public void addToTrash(FarmObject x) {
+		toRemove.add(x);
+	}
+
+	public void removeFromGame() {
+		for (FarmObject x : toRemove)
+			removeImage(x);
+		toRemove = new ArrayList<>();
+	}
+	///////////////////////////////////////////////////
+
+	public boolean colides(Point2D x) {
+		for (FarmObject p : Farm.getInstance().getLista())
+			if (p.getPosition().equals(x) && (p instanceof Animal || p instanceof Farmer))
+				return true;
+		return false;
 	}
 
 	// Não precisa de alterar nada a partir deste ponto
@@ -248,7 +310,7 @@ public class Farm implements Observer {
 	}
 
 	public static void main(String[] args) {
-		String[] dim = readFile(CONFIG);
+		String[] dim = Save.readFile(CONFIG);
 		Farm f = new Farm(Integer.parseInt(dim[0]), Integer.parseInt(dim[1]));
 		f.play();
 	}

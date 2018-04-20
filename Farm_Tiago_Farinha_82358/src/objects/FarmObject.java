@@ -1,10 +1,13 @@
 package objects;
 
+import java.io.Serializable;
+
 import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Point2D;
 
-public abstract class FarmObject implements ImageTile {
+@SuppressWarnings("serial")
+public abstract class FarmObject implements ImageTile, Serializable {
 
 	private Point2D position;
 

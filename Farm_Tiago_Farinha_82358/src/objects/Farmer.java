@@ -1,7 +1,7 @@
 package objects;
 
 import pt.iul.ista.poo.utils.Point2D;
-
+import farm.Farm;
 import pt.iul.ista.poo.utils.Direction;
 
 public class Farmer extends FarmObject {
@@ -40,11 +40,13 @@ public class Farmer extends FarmObject {
 	}
 
 	public void move() {
-		if (isInside(nova))
+		if (isInside(nova) && !(Farm.getInstance().colides(nova)))
 			setPosition(nova);
 		else
 			return;
 	}
+
+
 
 	public Point2D getNova() {
 		return nova;

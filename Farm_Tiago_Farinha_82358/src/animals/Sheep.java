@@ -40,7 +40,7 @@ public class Sheep extends Animal {
 		}
 
 		sumCicles(1);
-		Position();
+		move();
 		updateStatus();
 	}
 
