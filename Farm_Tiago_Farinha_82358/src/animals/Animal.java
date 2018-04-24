@@ -9,6 +9,8 @@ import vegetables.Vegetable;
 
 public abstract class Animal extends ObjectStatus {
 
+	private static final long serialVersionUID = 1L;
+
 	private Vegetable vegetal;
 
 	private boolean moving;
@@ -26,17 +28,20 @@ public abstract class Animal extends ObjectStatus {
 
 	public void comer() {
 		if (podeComer()) {
-			vegetal.remove();
+			Farm.getInstance().removeImage(vegetal);
+			UnplowLand(vegetal.getPosition());
 			setCuidado(true);
 		}
 	}
 
 	public boolean podeComer() {
-		for (FarmObject x : Farm.getInstance().getLista())
-			if (x.getPosition().equals(this.getPosition()) && x instanceof Vegetable
+		Position();
+		for (FarmObject x : Farm.getInstance().getInteratables())
+			if (x.getPosition().equals(nova) && x instanceof Vegetable
 					&& x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
-				
+
 				vegetal = (Vegetable) x;
+				stopMoving();
 				return true;
 			}
 		return false;

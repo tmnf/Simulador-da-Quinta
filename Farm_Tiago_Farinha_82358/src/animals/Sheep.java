@@ -4,6 +4,8 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Sheep extends Animal {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final int Fome = 10;
 	private static final int faminto = 50;
 
@@ -15,33 +17,31 @@ public class Sheep extends Animal {
 	@Override
 	public void updateStatus() {
 
-		if (getCiclos() >= Fome && getCiclos() < faminto)
+		if (getCiclos() >= Fome && getCiclos() < faminto) {
 			startMoving();
-		else if (getCiclos() >= faminto) {
+			comer();
+		} else if (getCiclos() >= faminto) {
 			setEstado("famished_sheep");
 			stopMoving();
 		}
 
 	}
-	
-	 @Override
+
+	@Override
 	public void interact() {
-		 setCuidado(true);
-		 setEstado("sheep");
+		setCuidado(true);
+		stopMoving();
+		setEstado("sheep");
 	}
 
 	@Override
 	public void addCiclo() {
-
+		super.addCiclo();
 		if (getCuidado()) {
 			resetCiclo();
 			setCuidado(false);
-			stopMoving();
 		}
-
-		sumCicles(1);
 		move();
-		updateStatus();
 	}
 
 }

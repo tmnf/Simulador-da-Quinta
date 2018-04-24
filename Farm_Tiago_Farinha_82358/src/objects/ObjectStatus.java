@@ -7,6 +7,8 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public abstract class ObjectStatus extends FarmObject implements Updatable, Interactable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String estado;
 	private int ciclos;
 	private boolean cuidado;
@@ -29,7 +31,8 @@ public abstract class ObjectStatus extends FarmObject implements Updatable, Inte
 	public void setEstado(String state) {
 		estado = state;
 	}
-	public String getEstado(){
+
+	public String getEstado() {
 		return estado;
 	}
 
@@ -60,8 +63,11 @@ public abstract class ObjectStatus extends FarmObject implements Updatable, Inte
 		updateStatus();
 	}
 
-	public void remove() {
-		Farm.getInstance().removeImage(this);
+	public void UnplowLand(Point2D pos) {
+		for (FarmObject x : Farm.getInstance().getLista())
+			if (x instanceof Land && x.getPosition().equals(pos))
+				((Land) x).setUnplowed();
+		;
 	}
 
 }

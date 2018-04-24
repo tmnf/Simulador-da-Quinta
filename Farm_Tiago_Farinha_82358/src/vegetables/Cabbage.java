@@ -4,6 +4,8 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Cabbage extends Vegetable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private static final int MATURE = 10;
 	private static final int ROTTEN = 30;
 

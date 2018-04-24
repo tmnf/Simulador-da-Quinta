@@ -2,12 +2,12 @@ package vegetables;
 
 import farm.Farm;
 import objects.Estado;
-import objects.FarmObject;
-import objects.Land;
 import objects.ObjectStatus;
 import pt.iul.ista.poo.utils.Point2D;
 
 public abstract class Vegetable extends ObjectStatus {
+
+	private static final long serialVersionUID = 1L;
 
 	public Vegetable(Point2D p) {
 		super(p);
@@ -32,8 +32,8 @@ public abstract class Vegetable extends ObjectStatus {
 	public void interact() {
 
 		if (getName().equals(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase())) {
-			UnplowLand();
-			remove();
+			UnplowLand(getPosition());
+			Farm.getInstance().removeImage(this);
 		} else if (getName().equals(getClass().getSimpleName().toLowerCase()))
 			cut();
 		else if (getName().equals(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase()))
@@ -42,17 +42,11 @@ public abstract class Vegetable extends ObjectStatus {
 
 	public void cut() {
 		Farm.getInstance().addPontos(getPontos());
-		remove();
-		UnplowLand();
+		Farm.getInstance().removeImage(this);
+		UnplowLand(getPosition());
 	}
 	public void takeCare() {
 		setCuidado(true);
-	}
-
-	private void UnplowLand() {
-		for (FarmObject x : Farm.getInstance().getLista())
-			if (x instanceof Land && x.getPosition().equals(getPosition()))
-				((Land) x).setUnplowed();;
 	}
 
 	public abstract int getPontos();

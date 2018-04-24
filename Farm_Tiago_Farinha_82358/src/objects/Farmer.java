@@ -6,8 +6,10 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Farmer extends FarmObject{
 
+	private static final long serialVersionUID = 1L;
+	
 	private Point2D actual;
-	Point2D nova;
+	private Point2D nova;
 
 	public Farmer(Point2D p) {
 		super(p);

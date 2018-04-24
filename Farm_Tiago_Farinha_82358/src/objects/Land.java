@@ -11,6 +11,8 @@ import vegetables.Vegetable;
 
 public class Land extends FarmObject implements Interactable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String estado;
 
 	public Land(Point2D p) {

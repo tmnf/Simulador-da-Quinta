@@ -5,6 +5,8 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Tomato extends Vegetable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private static final int MATURE = 15;
 	private static final int ROTTEN = 25;
 

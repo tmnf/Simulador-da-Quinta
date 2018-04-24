@@ -1,14 +1,18 @@
 package objects;
 
 import java.io.Serializable;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
+import farm.Farm;
 import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Point2D;
 
+public abstract class FarmObject implements ImageTile, Serializable {
 
-public abstract class FarmObject implements ImageTile, Serializable{
-
+	private static final long serialVersionUID = 1L;
+	
 	private Point2D position;
 
 	public FarmObject(Point2D p) {
@@ -39,6 +43,19 @@ public abstract class FarmObject implements ImageTile, Serializable{
 
 	public void setPosition(Point2D position) {
 		this.position = position;
+	}
+
+	public static FarmObject getMajorObject() {
+		PriorityQueue<FarmObject> toInteract = new PriorityQueue<>(new Comparator<FarmObject>() {
+			@Override
+			public int compare(FarmObject o1, FarmObject o2) {
+				return o2.getLayer() - o1.getLayer();
+			}
+		});
+		for (FarmObject x : Farm.getInstance().getInteratables())
+			if (x.getPosition().equals(Farm.getInstance().getFarmer().getNova()))
+				toInteract.add(x);
+		return toInteract.poll();
 	}
 
 }
