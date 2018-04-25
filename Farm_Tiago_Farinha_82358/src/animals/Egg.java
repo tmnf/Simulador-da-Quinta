@@ -9,8 +9,6 @@ public class Egg extends Animal {
 	
 	private static final int PONTOS = 1;
 	private static final int ECLODE = 20;
-	
-	private boolean ecloded;
 
 	public Egg(Point2D p) {
 		super(p);
@@ -21,7 +19,6 @@ public class Egg extends Animal {
 	public void updateStatus() {
 		if (getCiclos() >= ECLODE) {
 			Position();
-			ecloded = true;
 			Farm.getInstance().addImage(new Chicken(getNova()));
 			Farm.getInstance().removeImage(this);
 		}
@@ -32,8 +29,4 @@ public class Egg extends Animal {
 		Farm.getInstance().addPontos(PONTOS);
 		Farm.getInstance().removeImage(this);
 	}
-	public boolean getEclode() {
-		return ecloded;
-	}
-
 }

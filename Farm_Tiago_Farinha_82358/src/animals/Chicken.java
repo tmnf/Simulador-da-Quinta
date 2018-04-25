@@ -27,15 +27,9 @@ public class Chicken extends Animal {
 		if (getCiclos() % 2 == 0) {
 			startMoving();
 			comer();
+			move();
+			stopMoving();
 		}
-
-	}
-
-	@Override
-	public void addCiclo() {
-		super.addCiclo();
-		move();
-		stopMoving();
 	}
 
 	@Override

@@ -33,11 +33,13 @@ public class Farm implements Observer, Serializable {
 	public static final int SPACE = 32;
 	public static final int S = 83;
 	public static final int L = 76;
+	public static final int C = 67;
 
 	private Dimension dimension;
 
 	private boolean action;
 	private int pontos;
+	private int ciclos;
 
 	private static final String CONFIG = "Configs/config.txt";
 	private static final String SAVE = "Configs/savedGame.sav";
@@ -80,6 +82,8 @@ public class Farm implements Observer, Serializable {
 			addImage(new Chicken(new Point2D(rnd.nextInt(max_x), rnd.nextInt(max_y))));
 		}
 		addLand();
+
+		ImageMatrixGUI.getInstance().setStatusMessage("Pontos: " + pontos + " | Ciclos: " + ciclos);
 	}
 
 	@Override
@@ -92,6 +96,8 @@ public class Farm implements Observer, Serializable {
 		if (key == L) {
 			loadGame();
 		}
+		if (key == C)
+			buyChicken();
 
 		if (Direction.isDirection(key)) {
 			farmer.Position(Direction.directionFor(key));
@@ -102,9 +108,17 @@ public class Farm implements Observer, Serializable {
 				addCycle();
 			}
 		}
-
-		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + pontos);
+		ImageMatrixGUI.getInstance().setStatusMessage("Pontos: " + pontos + " | Ciclos: " + ciclos);
 		ImageMatrixGUI.getInstance().update();
+	}
+
+	// ====== Funções no Jogo ===== //
+	public void buyChicken() {
+		if (pontos >= 2) {
+			addImage(new Chicken(farmer.getPosition()));
+			pontos -= 2;
+		}
+		else System.out.println("Sem pontos suficientes para comprar galinha.");
 	}
 
 	// ============================Movimentos/TriggerAction/Ciclos/Alimentação)================//
@@ -119,6 +133,7 @@ public class Farm implements Observer, Serializable {
 	private void addCycle() {
 		for (FarmObject x : getUpdatables())
 			((Updatable) x).addCiclo();
+		ciclos++;
 	}
 	// =====================Diferentes Objetos e Ação========================//
 
@@ -182,6 +197,7 @@ public class Farm implements Observer, Serializable {
 			addImages(loaded.getLista());
 			farmer = loaded.getFarmer();
 			pontos = loaded.getPontos();
+			ciclos = loaded.getCiclos();
 			System.out.println("Jogo carregado com sucesso.");
 		} else {
 			System.out.println("Dimensões incompativeis; Ficheiro gravado : " + (int) loaded.getDim().getWidth() + "x"
@@ -206,6 +222,9 @@ public class Farm implements Observer, Serializable {
 
 	public int getPontos() {
 		return pontos;
+	}
+	public int getCiclos() {
+		return ciclos;
 	}
 
 	public Dimension getDim() {

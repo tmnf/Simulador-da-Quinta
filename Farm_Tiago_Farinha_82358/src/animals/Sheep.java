@@ -32,15 +32,13 @@ public class Sheep extends Animal {
 		setCuidado(true);
 		stopMoving();
 		setEstado("sheep");
+		setCuidado(false);
+		resetCiclo();
 	}
 
 	@Override
 	public void addCiclo() {
 		super.addCiclo();
-		if (getCuidado()) {
-			resetCiclo();
-			setCuidado(false);
-		}
 		move();
 	}
 
