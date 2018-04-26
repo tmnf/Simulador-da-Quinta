@@ -19,7 +19,7 @@ public class Cabbage extends Vegetable {
 	@Override
 	public void addCiclo() {
 		if (getCuidado()) {
-			sumCicles(1); // OU VAI INCREMENTANDO SEMPRE QUE FOR CUIDADA? DO TIPO: +2, +3, +4...?
+			sumCicles(1);
 			setCuidado(false);
 		}
 		sumCicles(1);

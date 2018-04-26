@@ -2,6 +2,7 @@ package animals;
 
 import farm.Farm;
 import objects.FarmObject;
+import objects.Farmer;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Tomato;
 import vegetables.Vegetable;
@@ -31,24 +32,24 @@ public class Chicken extends Animal {
 			stopMoving();
 		}
 	}
-
+	
 	@Override
 	public boolean podeComer() {
 		Position();
-		for (FarmObject x : Farm.getInstance().getInteratables())
-			if (x.getPosition().equals(getNova()) && x instanceof Tomato
-					&& x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
-
-				setVegetal((Vegetable) x);
-				stopMoving();
+		for (FarmObject x : Farm.getInstance().getInteratables(getNova()))
+			if (x instanceof Tomato && x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
+				setVegetal((Vegetable)x);
 				return true;
 			}
 		return false;
 	}
 
 	@Override
-	public void interact() {
-		Farm.getInstance().removeImage(this);
-		Farm.getInstance().addPontos(PONTOS);
+	public void interact(FarmObject x) {
+		if (x instanceof Farmer) {
+			Farm.getInstance().removeImage(this);
+			Farm.getInstance().addPontos(PONTOS);
+		}
 	}
+
 }

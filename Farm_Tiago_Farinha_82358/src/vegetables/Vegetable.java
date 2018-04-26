@@ -1,7 +1,10 @@
 package vegetables;
 
+import animals.Animal;
 import farm.Farm;
 import objects.Estado;
+import objects.FarmObject;
+import objects.Farmer;
 import objects.ObjectStatus;
 import pt.iul.ista.poo.utils.Point2D;
 
@@ -19,6 +22,11 @@ public abstract class Vegetable extends ObjectStatus {
 	}
 
 	@Override
+	public int getPriority() {
+		return 1;
+	}
+
+	@Override
 	public void updateStatus() {
 		if (getCiclos() >= getMature() && getCiclos() < getRotten())
 			setEstado(getClass().getSimpleName().toLowerCase());
@@ -29,15 +37,19 @@ public abstract class Vegetable extends ObjectStatus {
 	}
 
 	@Override
-	public void interact() {
-
-		if (getName().equals(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase())) {
-			UnplowLand(getPosition());
-			Farm.getInstance().removeImage(this);
-		} else if (getName().equals(getClass().getSimpleName().toLowerCase()))
-			cut();
-		else if (getName().equals(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase()))
-			takeCare();
+	public void interact(FarmObject x) {
+		if (x instanceof Farmer) {
+			if (getName().equals(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase()))
+				remove();
+			else if (getName().equals(getClass().getSimpleName().toLowerCase()))
+				cut();
+			else if (getName().equals(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase()))
+				takeCare();
+		}
+		if (x instanceof Animal) {
+				UnplowLand(getPosition());
+				Farm.getInstance().removeImage(this);
+		}
 	}
 
 	public void cut() {
@@ -45,6 +57,12 @@ public abstract class Vegetable extends ObjectStatus {
 		Farm.getInstance().removeImage(this);
 		UnplowLand(getPosition());
 	}
+
+	public void remove() {
+		UnplowLand(getPosition());
+		Farm.getInstance().removeImage(this);
+	}
+
 	public void takeCare() {
 		setCuidado(true);
 	}

@@ -1,12 +1,14 @@
 package animals;
 
 import farm.Farm;
+import objects.FarmObject;
+import objects.Farmer;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Egg extends Animal {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final int PONTOS = 1;
 	private static final int ECLODE = 20;
 
@@ -25,8 +27,15 @@ public class Egg extends Animal {
 	}
 
 	@Override
-	public void interact() {
-		Farm.getInstance().addPontos(PONTOS);
-		Farm.getInstance().removeImage(this);
+	public void interact(FarmObject x) {
+		if (x instanceof Farmer) {
+			Farm.getInstance().addPontos(PONTOS);
+			Farm.getInstance().removeImage(this);
+		}
+	}
+
+	@Override
+	public int getPriority() {
+		return 2;
 	}
 }

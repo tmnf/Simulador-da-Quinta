@@ -116,9 +116,9 @@ public class Farm implements Observer, Serializable {
 	public void buyChicken() {
 		if (pontos >= 2) {
 			addImage(new Chicken(farmer.getPosition()));
-			pontos -= 2;
-		}
-		else System.out.println("Sem pontos suficientes para comprar galinha.");
+			pontos -= 4;
+		} else
+			System.out.println("Sem pontos suficientes para comprar galinha.");
 	}
 
 	// ============================Movimentos/TriggerAction/Ciclos/Alimentação)================//
@@ -137,10 +137,10 @@ public class Farm implements Observer, Serializable {
 	}
 	// =====================Diferentes Objetos e Ação========================//
 
-	public ArrayList<FarmObject> getInteratables() {
+	public ArrayList<FarmObject> getInteratables(Point2D pos) {
 		ArrayList<FarmObject> list = new ArrayList<>();
 		for (FarmObject x : images)
-			if (x instanceof Interactable)
+			if (x instanceof Interactable && x.getPosition().equals(pos))
 				list.add(x);
 		return list;
 	}
@@ -154,11 +154,11 @@ public class Farm implements Observer, Serializable {
 	}
 
 	private void applyAction() {
-		try {
-			((Interactable) FarmObject.getMajorObject()).interact();
-		} catch (NullPointerException e) {
+		FarmObject x = FarmObject.getMajorObject();
+		if (x != null)
+			((Interactable) x).interact(farmer);
+		else
 			return;
-		}
 	}
 
 	// =========================Aux==========================//
@@ -223,6 +223,7 @@ public class Farm implements Observer, Serializable {
 	public int getPontos() {
 		return pontos;
 	}
+
 	public int getCiclos() {
 		return ciclos;
 	}

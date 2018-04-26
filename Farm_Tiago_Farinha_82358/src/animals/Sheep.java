@@ -1,6 +1,9 @@
 package animals;
 
+import objects.FarmObject;
+import objects.Farmer;
 import pt.iul.ista.poo.utils.Point2D;
+import vegetables.Vegetable;
 
 public class Sheep extends Animal {
 
@@ -16,7 +19,6 @@ public class Sheep extends Animal {
 
 	@Override
 	public void updateStatus() {
-
 		if (getCiclos() >= Fome && getCiclos() < faminto) {
 			startMoving();
 			comer();
@@ -28,12 +30,20 @@ public class Sheep extends Animal {
 	}
 
 	@Override
-	public void interact() {
-		setCuidado(true);
-		stopMoving();
-		setEstado("sheep");
-		setCuidado(false);
-		resetCiclo();
+	public void interact(FarmObject x) {
+		if (x instanceof Farmer) {
+			setCuidado(true);
+			stopMoving();
+			setEstado("sheep");
+			setCuidado(false);
+			resetCiclo();
+		}
+		if (x instanceof Vegetable) {
+			setCuidado(true);
+			stopMoving();
+			setCuidado(false);
+			resetCiclo();
+		}
 	}
 
 	@Override

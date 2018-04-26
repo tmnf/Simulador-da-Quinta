@@ -26,22 +26,25 @@ public abstract class Animal extends ObjectStatus {
 		return 2;
 	}
 
+	@Override
+	public int getPriority() {
+		return 3;
+	}
+
 	public void comer() {
 		if (podeComer()) {
-			Farm.getInstance().removeImage(vegetal);
-			UnplowLand(vegetal.getPosition());
+			stopMoving();
+			vegetal.interact(this);
+			interact(vegetal);
 			setCuidado(true);
 		}
 	}
 
 	public boolean podeComer() {
 		Position();
-		for (FarmObject x : Farm.getInstance().getInteratables())
-			if (x.getPosition().equals(nova) && x instanceof Vegetable
-					&& x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
-
+		for (FarmObject x : Farm.getInstance().getInteratables(nova))
+			if (x instanceof Vegetable && x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
 				vegetal = (Vegetable) x;
-				stopMoving();
 				return true;
 			}
 		return false;
