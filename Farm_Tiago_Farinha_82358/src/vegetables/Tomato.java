@@ -8,7 +8,7 @@ public class Tomato extends Vegetable {
 	private static final long serialVersionUID = 1L;
 
 	private static final int MATURE = 15;
-	private static final int ROTTEN = 2500;
+	private static final int ROTTEN = 25;
 
 	private static final int pontos = 2;
 

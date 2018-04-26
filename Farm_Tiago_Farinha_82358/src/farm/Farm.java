@@ -166,6 +166,13 @@ public class Farm implements Observer, Serializable {
 		registerAll();
 	}
 
+	public boolean colides(Point2D x) {
+		for (FarmObject p : Farm.getInstance().getLista())
+			if (p.getPosition().equals(x) && (p instanceof Animal || p instanceof Farmer))
+				return true;
+		return false;
+	}
+
 	public void addPontos(int p) {
 		pontos += p;
 	}
@@ -230,13 +237,6 @@ public class Farm implements Observer, Serializable {
 
 	public Dimension getDim() {
 		return dimension;
-	}
-
-	public boolean colides(Point2D x) {
-		for (FarmObject p : Farm.getInstance().getLista())
-			if (p.getPosition().equals(x) && (p instanceof Animal || p instanceof Farmer))
-				return true;
-		return false;
 	}
 
 	// Não precisa de alterar nada a partir deste ponto
