@@ -1,8 +1,9 @@
 package animals;
 
+import pt.iul.ista.poo.utils.Point2D;
+
 import objects.FarmObject;
 import objects.Farmer;
-import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Vegetable;
 
 public class Sheep extends Animal {

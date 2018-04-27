@@ -1,7 +1,8 @@
 package vegetables;
 
-import objects.Estado;
 import pt.iul.ista.poo.utils.Point2D;
+
+import objects.Estado;
 
 public class Tomato extends Vegetable {
 

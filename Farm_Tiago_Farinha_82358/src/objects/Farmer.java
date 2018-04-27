@@ -1,5 +1,6 @@
 package objects;
 
+
 import farm.Farm;
 import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;

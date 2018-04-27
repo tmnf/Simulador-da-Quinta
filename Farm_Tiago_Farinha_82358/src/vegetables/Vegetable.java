@@ -1,12 +1,13 @@
 package vegetables;
 
+import pt.iul.ista.poo.utils.Point2D;
+
 import animals.Animal;
 import farm.Farm;
 import objects.Estado;
 import objects.FarmObject;
 import objects.Farmer;
 import objects.ObjectStatus;
-import pt.iul.ista.poo.utils.Point2D;
 
 public abstract class Vegetable extends ObjectStatus {
 

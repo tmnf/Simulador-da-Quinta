@@ -1,5 +1,6 @@
 package animals;
 
+
 import farm.Farm;
 import objects.FarmObject;
 import objects.ObjectStatus;

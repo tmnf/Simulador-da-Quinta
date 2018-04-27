@@ -1,10 +1,10 @@
 package objects;
 
+import pt.iul.ista.poo.utils.Point2D;
 import java.util.Random;
 
 import farm.Farm;
 import interfaces.Interactable;
-import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Cabbage;
 import vegetables.Tomato;
 

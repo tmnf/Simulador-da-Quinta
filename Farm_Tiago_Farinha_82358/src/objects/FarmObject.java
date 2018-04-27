@@ -1,5 +1,6 @@
 package objects;
 
+import pt.iul.ista.poo.utils.Point2D;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -8,7 +9,6 @@ import farm.Farm;
 import interfaces.Interactable;
 import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.gui.ImageTile;
-import pt.iul.ista.poo.utils.Point2D;
 
 public abstract class FarmObject implements ImageTile, Serializable {
 
