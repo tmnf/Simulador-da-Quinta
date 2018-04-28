@@ -1,7 +1,7 @@
 package animals;
 
 import pt.iul.ista.poo.utils.Point2D;
-
+import farm.Farm;
 import objects.FarmObject;
 import objects.Farmer;
 import vegetables.Vegetable;
@@ -10,8 +10,10 @@ public class Sheep extends Animal {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final int Fome = 10;
-	private static final int faminto = 50;
+	private static final int FOME = 10;
+	private static final int FAMINTO = 50;
+	
+	private static final int PONTOS = 1;
 
 	public Sheep(Point2D p) {
 		super(p);
@@ -20,13 +22,13 @@ public class Sheep extends Animal {
 
 	@Override
 	public void updateStatus() {
-		if (getCiclos() >= Fome && getCiclos() < faminto) {
+		if (getCiclos() >= FOME && getCiclos() < FAMINTO) {
 			startMoving();
 			comer();
-		} else if (getCiclos() >= faminto) {
+		} else if (getCiclos() >= FAMINTO) {
 			setEstado("famished_sheep");
 			stopMoving();
-		}
+		} else Farm.getInstance().addPontos(PONTOS);
 
 	}
 

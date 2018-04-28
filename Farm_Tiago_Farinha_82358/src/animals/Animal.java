@@ -1,5 +1,6 @@
 package animals;
 
+import java.util.List;
 
 import farm.Farm;
 import objects.FarmObject;
@@ -56,9 +57,13 @@ public abstract class Animal extends ObjectStatus {
 	}
 
 	public void Position() {
-		nova = getPosition().plus(Direction.random().asVector());
-		while (!isInside(nova) || Farm.getInstance().colides(nova))
-			nova = getPosition().plus(Direction.random().asVector());
+		List<Point2D> points = Direction.getNeighbourhoodPoints(getPosition());
+		for (Point2D x : points)
+			if (!Farm.getInstance().colides(x) && isInside(x)) {
+				nova = x;
+				return;
+			} else
+				nova = getPosition();
 	}
 
 	public void move() {

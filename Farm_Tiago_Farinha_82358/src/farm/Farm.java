@@ -116,7 +116,7 @@ public class Farm implements Observer, Serializable {
 	public void buyChicken() {
 		if (pontos >= 2) {
 			addImage(new Chicken(farmer.getPosition()));
-			pontos -= 4;
+			pontos -= 10;
 		} else
 			System.out.println("Sem pontos suficientes para comprar galinha.");
 	}
