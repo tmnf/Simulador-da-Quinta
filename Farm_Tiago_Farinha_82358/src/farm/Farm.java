@@ -97,7 +97,7 @@ public class Farm implements Observer, Serializable {
 			loadGame();
 		}
 		if (key == B)
-			new Market();
+			new Window();
 
 		if (Direction.isDirection(key)) {
 			farmer.Position(Direction.directionFor(key));
@@ -111,6 +111,7 @@ public class Farm implements Observer, Serializable {
 		ImageMatrixGUI.getInstance().setStatusMessage("Pontos: " + pontos + " | Ciclos: " + ciclos);
 		ImageMatrixGUI.getInstance().update();
 	}
+
 	// ============================Movimentos/TriggerAction/Ciclos/Alimentação)================//
 	private void action(int key) {
 		if (farmer.isInside(farmer.getNova())) {
@@ -125,6 +126,7 @@ public class Farm implements Observer, Serializable {
 			((Updatable) x).addCiclo();
 		ciclos++;
 	}
+
 	public void refresh() {
 		ImageMatrixGUI.getInstance().setStatusMessage("Pontos: " + pontos + " | Ciclos: " + ciclos);
 		ImageMatrixGUI.getInstance().update();
@@ -170,6 +172,7 @@ public class Farm implements Observer, Serializable {
 	public void addPontos(int p) {
 		pontos += p;
 	}
+
 	public void takePontos(int p) {
 		pontos -= p;
 	}
@@ -202,11 +205,10 @@ public class Farm implements Observer, Serializable {
 			farmer = loaded.getFarmer();
 			pontos = loaded.getPontos();
 			ciclos = loaded.getCiclos();
-			System.out.println("Jogo carregado com sucesso.");
+			new Window("Jogo Carregado");
 		} else {
-			System.out.println("Dimensões incompativeis; Ficheiro gravado : " + (int) loaded.getDim().getWidth() + "x"
-					+ (int) loaded.getDim().getHeight() + "\n" + "Este ficheiro: " + dimension.width + "x"
-					+ dimension.height);
+			new Window("Dimensão errada! Mudar para: " + (int) loaded.getDim().getWidth() + "x"
+					+ (int) loaded.getDim().getHeight());
 		}
 	}
 

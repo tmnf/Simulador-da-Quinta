@@ -14,7 +14,7 @@ import animals.Chicken;
 import animals.Sheep;
 import entities.Cultivator;
 
-public class Market extends JFrame {
+public class Window extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,13 +29,13 @@ public class Market extends JFrame {
 	private static final int MAX_X = 500;
 	private static final int MAX_Y = 250;
 
-	public Market() {
+	public Window() {
 		super("Mercado");
 		setSize(MAX_X, MAX_Y);
 		setResizable(false);
 		setLayout(null);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		chicken = new JButton(new ImageIcon("images/chicken.png"));
 		sheep = new JButton(new ImageIcon("images/sheep.png"));
@@ -77,7 +77,7 @@ public class Market extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Farm.getInstance().getPontos() < CHICKEN_POINTS)
-					new Market("Sem pontos suficientes!");
+					new Window("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Chicken(Farm.getInstance().getFarmer().getPosition()));
 					refresh(CHICKEN_POINTS);
@@ -89,7 +89,7 @@ public class Market extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Farm.getInstance().getPontos() < SHEEP_POINTS)
-					new Market("Sem pontos suficientes!");
+					new Window("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Sheep(Farm.getInstance().getFarmer().getPosition()));
 					refresh(SHEEP_POINTS);
@@ -101,7 +101,7 @@ public class Market extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Farm.getInstance().getPontos() < CULTIVATOR_POINTS)
-					new Market("Sem pontos suficientes!");
+					new Window("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Cultivator(Farm.getInstance().getFarmer().getPosition()));
 					refresh(CULTIVATOR_POINTS);
@@ -118,7 +118,7 @@ public class Market extends JFrame {
 
 	}
 
-	private Market(String message) {
+	public Window(String message) {
 		super("Aviso");
 		setSize(300, 200);
 		setResizable(false);
@@ -126,11 +126,12 @@ public class Market extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-		txt.setBounds(50, 20, 200, 50);
+		txt.setBounds(60,20 , 200, 50);
 		txt.setFont(txt.getFont().deriveFont(18f));
 		txt.setEditable(false);
 		txt.setText(message);
 		txt.setOpaque(false);
+		txt.setLineWrap(true);
 
 		ok = new JButton("Ok");
 		ok.setBounds(125, 100, 50, 50);

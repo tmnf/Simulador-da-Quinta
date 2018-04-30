@@ -2,6 +2,7 @@ package entities;
 
 import java.util.List;
 
+import farm.Farm;
 import interfaces.Interactable;
 import interfaces.Updatable;
 import objects.FarmObject;
@@ -37,8 +38,14 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 
 	@Override
 	public void interact(FarmObject x) {
-		if (x instanceof Farmer)
+		if (x instanceof Farmer) {
 			fuel = MAX_FUEL;
+			Farm.getInstance().takePontos(25);
+		}
+	}
+	@Override
+	public int getLayer() {
+		return 2;
 	}
 
 	@Override

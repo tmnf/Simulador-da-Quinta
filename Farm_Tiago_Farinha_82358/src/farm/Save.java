@@ -20,7 +20,7 @@ public class Save {
 			objOutput.writeObject(Farm.getInstance());
 			objOutput.close();
 			saveGame.close();
-			System.out.println("Jogo salvo com sucesso.");
+			new Window("Jogo Salvo");
 		} catch (FileNotFoundException e) {
 			System.out.println("Ficheiro nao encontrado.");
 		} catch (IOException e) {
