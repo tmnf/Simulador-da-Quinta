@@ -1,5 +1,6 @@
 package animals;
 
+import java.util.Collections;
 import java.util.List;
 
 import farm.Farm;
@@ -58,6 +59,7 @@ public abstract class Animal extends ObjectStatus {
 
 	public void Position() {
 		List<Point2D> points = Direction.getNeighbourhoodPoints(getPosition());
+		Collections.shuffle(points);
 		for (Point2D x : points)
 			if (!Farm.getInstance().colides(x) && isInside(x)) {
 				nova = x;

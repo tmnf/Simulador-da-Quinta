@@ -46,14 +46,14 @@ public abstract class FarmObject implements ImageTile, Serializable {
 		this.position = position;
 	}
 
-	public static FarmObject getMajorObject() {
+	public static FarmObject getMajorObject(Point2D pos) {
 		PriorityQueue<FarmObject> toInteract = new PriorityQueue<>(new Comparator<FarmObject>() {
 			@Override
 			public int compare(FarmObject o1, FarmObject o2) {
 				return ((Interactable) o2).getPriority() - ((Interactable) o1).getPriority();
 			}
 		});
-		for (FarmObject x : Farm.getInstance().getInteratables(Farm.getInstance().getFarmer().getNova()))
+		for (FarmObject x : Farm.getInstance().getInteratables(pos))
 				toInteract.add(x);
 		return toInteract.poll();
 	}

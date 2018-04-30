@@ -33,7 +33,7 @@ public class Farm implements Observer, Serializable {
 	public static final int SPACE = 32;
 	public static final int S = 83;
 	public static final int L = 76;
-	public static final int C = 67;
+	public static final int B = 66;
 
 	private Dimension dimension;
 
@@ -96,8 +96,8 @@ public class Farm implements Observer, Serializable {
 		if (key == L) {
 			loadGame();
 		}
-		if (key == C)
-			buyChicken();
+		if (key == B)
+			new Market();
 
 		if (Direction.isDirection(key)) {
 			farmer.Position(Direction.directionFor(key));
@@ -111,16 +111,6 @@ public class Farm implements Observer, Serializable {
 		ImageMatrixGUI.getInstance().setStatusMessage("Pontos: " + pontos + " | Ciclos: " + ciclos);
 		ImageMatrixGUI.getInstance().update();
 	}
-
-	// ====== Funções no Jogo ===== //
-	public void buyChicken() {
-		if (pontos >= 10) {
-			addImage(new Chicken(farmer.getPosition()));
-			pontos -= 10;
-		} else
-			System.out.println("Sem pontos suficientes para comprar galinha.");
-	}
-
 	// ============================Movimentos/TriggerAction/Ciclos/Alimentação)================//
 	private void action(int key) {
 		if (farmer.isInside(farmer.getNova())) {
@@ -134,6 +124,10 @@ public class Farm implements Observer, Serializable {
 		for (FarmObject x : getUpdatables())
 			((Updatable) x).addCiclo();
 		ciclos++;
+	}
+	public void refresh() {
+		ImageMatrixGUI.getInstance().setStatusMessage("Pontos: " + pontos + " | Ciclos: " + ciclos);
+		ImageMatrixGUI.getInstance().update();
 	}
 	// =====================Diferentes Objetos e Ação========================//
 
@@ -154,7 +148,7 @@ public class Farm implements Observer, Serializable {
 	}
 
 	private void applyAction() {
-		FarmObject x = FarmObject.getMajorObject();
+		FarmObject x = FarmObject.getMajorObject(farmer.getNova());
 		if (x != null)
 			((Interactable) x).interact(farmer);
 		else
@@ -175,6 +169,9 @@ public class Farm implements Observer, Serializable {
 
 	public void addPontos(int p) {
 		pontos += p;
+	}
+	public void takePontos(int p) {
+		pontos -= p;
 	}
 
 	private void addLand() {
