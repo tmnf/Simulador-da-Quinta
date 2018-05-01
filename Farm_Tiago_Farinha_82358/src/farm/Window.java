@@ -24,7 +24,7 @@ public class Window extends JFrame {
 	private static final int SHEEP_POINTS = 100;
 	private static final int CULTIVATOR_POINTS = 5;
 
-	private JTextArea txt = new JTextArea();
+	private JTextArea txt;
 
 	private static final int MAX_X = 500;
 	private static final int MAX_Y = 250;
@@ -41,6 +41,8 @@ public class Window extends JFrame {
 		sheep = new JButton(new ImageIcon("images/sheep.png"));
 		cultivator = new JButton(new ImageIcon("images/cultivator.png"));
 		ok = new JButton("Ok");
+
+		txt = new JTextArea();
 
 		chicken.setLayout(new BorderLayout());
 		JLabel label1 = new JLabel(CHICKEN_POINTS + " Pontos");
@@ -126,7 +128,9 @@ public class Window extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-		txt.setBounds(60,20 , 200, 50);
+		txt = new JTextArea();
+
+		txt.setBounds(60, 20, 200, 50);
 		txt.setFont(txt.getFont().deriveFont(18f));
 		txt.setEditable(false);
 		txt.setText(message);
