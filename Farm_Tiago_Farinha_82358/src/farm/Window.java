@@ -22,7 +22,7 @@ public class Window extends JFrame {
 
 	private static final int CHICKEN_POINTS = 50;
 	private static final int SHEEP_POINTS = 100;
-	private static final int CULTIVATOR_POINTS = 600;
+	private static final int CULTIVATOR_POINTS = 5;
 
 	private JTextArea txt = new JTextArea();
 
