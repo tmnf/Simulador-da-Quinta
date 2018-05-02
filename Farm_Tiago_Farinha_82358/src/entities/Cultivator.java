@@ -18,14 +18,16 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 	private static final long serialVersionUID = 1L;
 
 	private static final int MAX_FUEL = 50;
+	private static final int MAX_DURABILITY = 600;
 
-	private int fuel;
+	private int fuel, durability;
 	private boolean working;
 
 	public Cultivator(Point2D p) {
 		super(p);
 		working = true;
 		fuel = MAX_FUEL;
+		durability = MAX_DURABILITY;
 	}
 
 	public void Work() {
@@ -45,6 +47,7 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 			new Window("Cultivador Abastecido!");
 		}
 	}
+
 	@Override
 	public int getLayer() {
 		return 2;
@@ -61,11 +64,17 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 		if (working) {
 			Work();
 			fuel--;
+			durability--;
 		}
 	}
 
 	@Override
 	public void updateStatus() {
+		if (durability == 0) {
+			Farm.getInstance().removeImage(this);
+			new Window("Um dos cultivadores       fartou-se de viver!");
+		}
+
 		if (fuel == 0)
 			working = false;
 		if (fuel == MAX_FUEL)
