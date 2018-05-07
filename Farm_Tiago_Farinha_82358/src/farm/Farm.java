@@ -198,18 +198,19 @@ public class Farm implements Observer, Serializable {
 
 	public void loadGame() {
 		Farm loaded = Save.loadGame(SAVE);
-		if (dimension.equals(loaded.getDim())) {
-			ImageMatrixGUI.getInstance().clearImages();
-			images = new ArrayList<>();
-			addImages(loaded.getLista());
-			farmer = loaded.getFarmer();
-			pontos = loaded.getPontos();
-			ciclos = loaded.getCiclos();
-			new Window("Jogo Carregado");
-		} else {
-			new Window("Dimensão errada! Mudar para: " + (int) loaded.getDim().getWidth() + "x"
-					+ (int) loaded.getDim().getHeight());
-		}
+		if (loaded != null)
+			if (dimension.equals(loaded.getDim())) {
+				ImageMatrixGUI.getInstance().clearImages();
+				images.clear();
+				addImages(loaded.getLista());
+				farmer = loaded.getFarmer();
+				pontos = loaded.getPontos();
+				ciclos = loaded.getCiclos();
+				Window.aviso("Jogo Carregado");
+			} else {
+				Window.aviso("Dimensão errada! Mudar para: " + (int) loaded.getDim().getWidth() + "x"
+						+ (int) loaded.getDim().getHeight());
+			}
 	}
 
 	private void addImages(List<FarmObject> list) {

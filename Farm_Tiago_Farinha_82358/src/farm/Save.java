@@ -20,11 +20,9 @@ public class Save {
 			objOutput.writeObject(Farm.getInstance());
 			objOutput.close();
 			saveGame.close();
-			new Window("Jogo Salvo");
-		} catch (FileNotFoundException e) {
-			System.out.println("Ficheiro nao encontrado.");
+			Window.aviso("Jogo Salvo");
 		} catch (IOException e) {
-			e.printStackTrace();
+			Window.aviso("Erros na gravação do ficheiro!");
 		}
 	}
 
@@ -37,12 +35,10 @@ public class Save {
 			farm = (Farm) objInput.readObject();
 			objInput.close();
 			saveGame.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Window.aviso("Erro na leitura do ficheiro!");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			Window.aviso("Erro na leitura do ficheiro!");
 		}
 		return farm;
 	}
@@ -58,7 +54,7 @@ public class Save {
 			}
 			fileScanner.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Ficheiro não encontrado.");
+			Window.aviso("Ficheiro não encontrado.");
 		}
 		return info;
 	}

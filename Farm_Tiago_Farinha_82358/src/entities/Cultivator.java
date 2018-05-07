@@ -44,7 +44,7 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 		if (x instanceof Farmer) {
 			fuel = MAX_FUEL;
 			Farm.getInstance().takePontos(25);
-			new Window("Cultivador Abastecido!");
+			Window.aviso("Cultivador Abastecido!");
 		}
 	}
 
@@ -72,7 +72,7 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 	public void updateStatus() {
 		if (durability == 0) {
 			Farm.getInstance().removeImage(this);
-			new Window("Um dos cultivadores       fartou-se de viver!");
+			Window.aviso("Um dos cultivadores fartou-se de trabalhar!");
 		}
 
 		if (fuel == 0)

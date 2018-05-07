@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 import animals.Chicken;
@@ -23,7 +24,7 @@ public class Window extends JFrame {
 
 	private static final int CHICKEN_POINTS = 50;
 	private static final int SHEEP_POINTS = 100;
-	private static final int CULTIVATOR_POINTS = 400;
+	private static final int CULTIVATOR_POINTS = 4;
 
 	private static final int MAX_X = 500;
 	private static final int MAX_Y = 250;
@@ -78,7 +79,7 @@ public class Window extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Farm.getInstance().getPontos() < CHICKEN_POINTS)
-					new Window("Sem pontos suficientes!");
+					aviso("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Chicken(Farm.getInstance().getFarmer().getPosition()));
 					refresh(CHICKEN_POINTS);
@@ -90,7 +91,7 @@ public class Window extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Farm.getInstance().getPontos() < SHEEP_POINTS)
-					new Window("Sem pontos suficientes!");
+					aviso("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Sheep(Farm.getInstance().getFarmer().getPosition()));
 					refresh(SHEEP_POINTS);
@@ -102,7 +103,7 @@ public class Window extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Farm.getInstance().getPontos() < CULTIVATOR_POINTS)
-					new Window("Sem pontos suficientes!");
+					aviso("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Cultivator(Farm.getInstance().getFarmer().getPosition()));
 					refresh(CULTIVATOR_POINTS);
@@ -119,38 +120,8 @@ public class Window extends JFrame {
 
 	}
 
-	public Window(String message) {
-		super("Aviso");
-		setSize(300, 200);
-		setResizable(false);
-		setLayout(null);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-		txt = new JTextArea();
-
-		txt.setBounds(60, 20, 200, 50);
-		txt.setFont(txt.getFont().deriveFont(18f));
-		txt.setEditable(false);
-		txt.setText(message);
-		txt.setOpaque(false);
-		txt.setLineWrap(true);
-
-		ok = new JButton("Ok");
-		ok.setBounds(125, 100, 50, 50);
-
-		ok.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-
-		add(txt);
-		add(ok);
-
-		setVisible(true);
-
+	public static void aviso(String message) {
+		JOptionPane.showMessageDialog(null, message, "Aviso", JOptionPane.WARNING_MESSAGE);
 	}
 
 	private void refresh(int pontos) {
