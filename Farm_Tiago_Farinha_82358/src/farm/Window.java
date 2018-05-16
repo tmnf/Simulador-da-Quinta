@@ -24,7 +24,7 @@ public class Window extends JFrame {
 
 	private static final int CHICKEN_POINTS = 50;
 	private static final int SHEEP_POINTS = 100;
-	private static final int CULTIVATOR_POINTS = 4;
+	private static final int CULTIVATOR_POINTS = 400;
 
 	private static final int MAX_X = 500;
 	private static final int MAX_Y = 250;
