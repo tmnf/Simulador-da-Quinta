@@ -4,7 +4,7 @@ import objects.FarmObject;
 
 public interface Interactable {
 
-	void interact(FarmObject x);
+	void interactWith(FarmObject x);
 	int getPriority();
 
 }

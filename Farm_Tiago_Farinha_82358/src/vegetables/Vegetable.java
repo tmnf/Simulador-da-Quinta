@@ -38,7 +38,7 @@ public abstract class Vegetable extends ObjectStatus {
 	}
 
 	@Override
-	public void interact(FarmObject x) {
+	public void interactWith(FarmObject x) {
 		if (x instanceof Farmer) {
 			if (getName().equals(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase()))
 				remove();

@@ -37,8 +37,8 @@ public abstract class Animal extends ObjectStatus {
 	public void comer() {
 		if (podeComer()) {
 			stopMoving();
-			vegetal.interact(this);
-			interact(vegetal);
+			vegetal.interactWith(this);
+			interactWith(vegetal);
 			setCuidado(true);
 		}
 	}

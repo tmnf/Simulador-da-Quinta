@@ -35,12 +35,12 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 		for (Point2D x : points) {
 			FarmObject obj = getMajorObject(x);
 			if (obj instanceof Vegetable || obj instanceof Land)
-				((Interactable) obj).interact(this);
+				((Interactable) obj).interactWith(this);
 		}
 	}
 
 	@Override
-	public void interact(FarmObject x) {
+	public void interactWith(FarmObject x) {
 		if (x instanceof Farmer) {
 			fuel = MAX_FUEL;
 			Farm.getInstance().takePontos(25);

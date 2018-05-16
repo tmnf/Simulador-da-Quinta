@@ -33,7 +33,7 @@ public class Sheep extends Animal {
 	}
 
 	@Override
-	public void interact(FarmObject x) {
+	public void interactWith(FarmObject x) {
 		if (x instanceof Farmer) {
 			setCuidado(true);
 			stopMoving();

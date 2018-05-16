@@ -33,7 +33,7 @@ public class Land extends FarmObject implements Interactable {
 	}
 
 	@Override
-	public void interact(FarmObject x) {
+	public void interactWith(FarmObject x) {
 		if(x instanceof Farmer)
 			if (getName().equals("plowed")) {
 				plant();

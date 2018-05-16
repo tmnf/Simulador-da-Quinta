@@ -152,9 +152,7 @@ public class Farm implements Observer, Serializable {
 	private void applyAction() {
 		FarmObject x = FarmObject.getMajorObject(farmer.getNova());
 		if (x != null)
-			((Interactable) x).interact(farmer);
-		else
-			return;
+			((Interactable) x).interactWith(farmer);
 	}
 
 	// =========================Aux==========================//

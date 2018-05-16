@@ -45,7 +45,7 @@ public class Chicken extends Animal {
 	}
 
 	@Override
-	public void interact(FarmObject x) {
+	public void interactWith(FarmObject x) {
 		if (x instanceof Farmer) {
 			Farm.getInstance().removeImage(this);
 			Farm.getInstance().addPontos(PONTOS);
