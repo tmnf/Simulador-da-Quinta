@@ -60,7 +60,7 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 
 	@Override
 	public void addCiclo() {
-		updateStatus();
+		updateState();
 		if (working) {
 			Work();
 			fuel--;
@@ -69,7 +69,7 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 	}
 
 	@Override
-	public void updateStatus() {
+	public void updateState() {
 		if (durability == 0) {
 			Farm.getInstance().removeImage(this);
 			Window.aviso("Um dos cultivadores fartou-se de trabalhar!");

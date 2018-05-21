@@ -5,12 +5,12 @@ import java.util.List;
 
 import farm.Farm;
 import objects.FarmObject;
-import objects.ObjectStatus;
+import objects.ObjectState;
 import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Vegetable;
 
-public abstract class Animal extends ObjectStatus {
+public abstract class Animal extends ObjectState {
 
 	private static final long serialVersionUID = 1L;
 

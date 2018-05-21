@@ -21,7 +21,7 @@ public class Sheep extends Animal {
 	}
 
 	@Override
-	public void updateStatus() {
+	public void updateState() {
 		if (getCiclos() >= FOME && getCiclos() < FAMINTO) {
 			startMoving();
 			comer();

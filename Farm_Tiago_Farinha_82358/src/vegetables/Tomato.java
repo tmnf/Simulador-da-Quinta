@@ -11,14 +11,14 @@ public class Tomato extends Vegetable {
 	private static final int MATURE = 15;
 	private static final int ROTTEN = 25;
 
-	private static final int pontos = 2;
+	private static final int PONTOS = 2;
 
 	public Tomato(Point2D p) {
 		super(p);
 	}
 
 	@Override
-	public void updateStatus() {
+	public void updateState() {
 		if (getCiclos() >= getMature() && getCiclos() < getRotten() && getCuidado())
 			setEstado(getClass().getSimpleName().toLowerCase());
 		else if (getCiclos() >= getRotten())
@@ -29,7 +29,7 @@ public class Tomato extends Vegetable {
 
 	@Override
 	public int getPontos() {
-		return pontos;
+		return PONTOS;
 	}
 
 	@Override

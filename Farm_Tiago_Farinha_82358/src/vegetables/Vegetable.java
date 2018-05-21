@@ -7,9 +7,9 @@ import farm.Farm;
 import objects.Estado;
 import objects.FarmObject;
 import objects.Farmer;
-import objects.ObjectStatus;
+import objects.ObjectState;
 
-public abstract class Vegetable extends ObjectStatus {
+public abstract class Vegetable extends ObjectState {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public abstract class Vegetable extends ObjectStatus {
 	}
 
 	@Override
-	public void updateStatus() {
+	public void updateState() {
 		if (getCiclos() >= getMature() && getCiclos() < getRotten())
 			setEstado(getClass().getSimpleName().toLowerCase());
 		else if (getCiclos() >= getRotten())
@@ -48,8 +48,8 @@ public abstract class Vegetable extends ObjectStatus {
 				takeCare();
 		}
 		if (x instanceof Animal) {
-				UnplowLand(getPosition());
-				Farm.getInstance().removeImage(this);
+			UnplowLand(getPosition());
+			Farm.getInstance().removeImage(this);
 		}
 	}
 

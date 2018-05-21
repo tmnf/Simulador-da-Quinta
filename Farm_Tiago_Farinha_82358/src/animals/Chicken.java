@@ -20,7 +20,7 @@ public class Chicken extends Animal {
 	}
 
 	@Override
-	public void updateStatus() {
+	public void updateState() {
 		if (getCiclos() == OVO) {
 			resetCiclo();
 			Farm.getInstance().addImage(new Egg(getPosition()));
