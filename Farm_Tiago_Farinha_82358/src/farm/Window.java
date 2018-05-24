@@ -22,9 +22,9 @@ public class Window extends JFrame {
 	private JButton chicken, sheep, cultivator, ok;
 	private JTextArea txt;
 
-	private static final int CHICKEN_POINTS = Chicken.PRICE;
-	private static final int SHEEP_POINTS = Sheep.PRICE;
-	private static final int CULTIVATOR_POINTS = Cultivator.PRICE;
+	private static final int CHICKEN_PRICE = Chicken.PRICE;
+	private static final int SHEEP_PRICE = Sheep.PRICE;
+	private static final int CULTIVATOR_PRICE = Cultivator.PRICE;
 
 	private static final int MAX_X = 500;
 	private static final int MAX_Y = 250;
@@ -45,15 +45,15 @@ public class Window extends JFrame {
 		txt = new JTextArea();
 
 		chicken.setLayout(new BorderLayout());
-		JLabel label1 = new JLabel(CHICKEN_POINTS + " Pontos");
+		JLabel label1 = new JLabel(CHICKEN_PRICE + " Pontos");
 		chicken.add(BorderLayout.SOUTH, label1);
 
 		sheep.setLayout(new BorderLayout());
-		JLabel label2 = new JLabel(SHEEP_POINTS + " Pontos");
+		JLabel label2 = new JLabel(SHEEP_PRICE + " Pontos");
 		sheep.add(BorderLayout.SOUTH, label2);
 
 		cultivator.setLayout(new BorderLayout());
-		JLabel label3 = new JLabel(CULTIVATOR_POINTS + " Pontos");
+		JLabel label3 = new JLabel(CULTIVATOR_PRICE + " Pontos");
 		cultivator.add(BorderLayout.SOUTH, label3);
 
 		chicken.setBounds(30, 30, 100, 100);
@@ -78,11 +78,11 @@ public class Window extends JFrame {
 		chicken.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Farm.getInstance().getPontos() < CHICKEN_POINTS)
+				if (Farm.getInstance().getPontos() < CHICKEN_PRICE)
 					aviso("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Chicken(Farm.getInstance().getFarmer().getPosition()));
-					refresh(CHICKEN_POINTS);
+					refresh(CHICKEN_PRICE);
 				}
 			}
 		});
@@ -90,11 +90,11 @@ public class Window extends JFrame {
 		sheep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Farm.getInstance().getPontos() < SHEEP_POINTS)
+				if (Farm.getInstance().getPontos() < SHEEP_PRICE)
 					aviso("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Sheep(Farm.getInstance().getFarmer().getPosition()));
-					refresh(SHEEP_POINTS);
+					refresh(SHEEP_PRICE);
 				}
 			}
 		});
@@ -102,11 +102,11 @@ public class Window extends JFrame {
 		cultivator.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Farm.getInstance().getPontos() < CULTIVATOR_POINTS)
+				if (Farm.getInstance().getPontos() < CULTIVATOR_PRICE)
 					aviso("Sem pontos suficientes!");
 				else {
 					Farm.getInstance().addImage(new Cultivator(Farm.getInstance().getFarmer().getPosition()));
-					refresh(CULTIVATOR_POINTS);
+					refresh(CULTIVATOR_PRICE);
 				}
 			}
 		});
