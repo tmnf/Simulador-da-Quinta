@@ -2,17 +2,17 @@ package vegetables;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import pt.iul.ista.poo.utils.Point2D;
 
-class TestCabbage {
+public class TestCabbage {
 	
-	static Cabbage c1, c2, c3, c4;
+	 Cabbage c1, c2, c3, c4;
 
-	@BeforeAll
-	public static void setUp() {
+	@Before
+	public void setUp() {
 		c1 = new Cabbage(new Point2D(1,2));
 		c2 = new Cabbage(new Point2D(1,2));
 		c3 = new Cabbage(new Point2D(5,3));

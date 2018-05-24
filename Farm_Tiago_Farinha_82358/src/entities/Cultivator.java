@@ -7,8 +7,7 @@ import farm.Window;
 import interfaces.Interactable;
 import interfaces.Updatable;
 import objects.FarmObject;
-import objects.Farmer;
-import objects.Land;
+import objects.PositionUtil;
 import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Vegetable;
@@ -23,6 +22,8 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 	private int fuel, durability;
 	private boolean working;
 
+	public static final int PRICE = 400;
+
 	public Cultivator(Point2D p) {
 		super(p);
 		working = true;
@@ -30,10 +31,20 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 		durability = MAX_DURABILITY;
 	}
 
+	@Override
+	public int getLayer() {
+		return 2;
+	}
+
+	@Override
+	public int getPriority() {
+		return 4;
+	}
+
 	public void Work() {
 		List<Point2D> points = Direction.getNeighbourhoodPoints(getPosition());
 		for (Point2D x : points) {
-			FarmObject obj = getMajorObject(x);
+			FarmObject obj = PositionUtil.getMajorObject(x);
 			if (obj instanceof Vegetable || obj instanceof Land)
 				((Interactable) obj).interactWith(this);
 		}
@@ -49,17 +60,7 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 	}
 
 	@Override
-	public int getLayer() {
-		return 2;
-	}
-
-	@Override
-	public int getPriority() {
-		return 4;
-	}
-
-	@Override
-	public void addCiclo() {
+	public void addCycle() {
 		updateState();
 		if (working) {
 			Work();

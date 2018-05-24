@@ -22,9 +22,9 @@ public class Window extends JFrame {
 	private JButton chicken, sheep, cultivator, ok;
 	private JTextArea txt;
 
-	private static final int CHICKEN_POINTS = 50;
-	private static final int SHEEP_POINTS = 100;
-	private static final int CULTIVATOR_POINTS = 400;
+	private static final int CHICKEN_POINTS = Chicken.PRICE;
+	private static final int SHEEP_POINTS = Sheep.PRICE;
+	private static final int CULTIVATOR_POINTS = Cultivator.PRICE;
 
 	private static final int MAX_X = 500;
 	private static final int MAX_Y = 250;

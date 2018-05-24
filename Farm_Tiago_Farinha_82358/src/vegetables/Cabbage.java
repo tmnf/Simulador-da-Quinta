@@ -42,11 +42,11 @@ public class Cabbage extends Vegetable {
 	 * Adds one cycle to the object's life and changes its state according to the object's current condition
 	 */
 	@Override
-	public void addCiclo() {
-		if (getCuidado()) {
-			setCuidado(false);
+	public void addCycle() {
+		if (getCareInfo()) {
+			setCare(false);
 		}
-		sumCicles(1);
+		sumCycles(1);
 		updateState();
 	}
 
@@ -56,7 +56,7 @@ public class Cabbage extends Vegetable {
 	@Override
 	public void takeCare() {
 		super.takeCare();
-		sumCicles(1);
+		sumCycles(1);
 		updateState();
 	}
 

@@ -11,12 +11,13 @@ import java.util.Random;
 import animals.Animal;
 import animals.Chicken;
 import animals.Sheep;
+import entities.Farmer;
+import entities.Land;
+import entities.Rock;
 import interfaces.Interactable;
 import interfaces.Updatable;
 import objects.FarmObject;
-import objects.Farmer;
-import objects.Land;
-import objects.Rock;
+import objects.PositionUtil;
 import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Direction;
@@ -28,7 +29,7 @@ public class Farm implements Observer, Serializable {
 
 	private Farmer farmer;
 
-	private List<FarmObject> images;
+	private List<FarmObject> gameObjects;
 
 	public static final int SPACE = 32;
 	public static final int S = 83;
@@ -38,8 +39,7 @@ public class Farm implements Observer, Serializable {
 	private Dimension dimension;
 
 	private boolean action;
-	private int pontos;
-	private int ciclos;
+	private int pontos, ciclos;
 
 	private static final String CONFIG = "Configs/config.txt";
 	private static final String SAVE = "Configs/savedGame.sav";
@@ -70,7 +70,7 @@ public class Farm implements Observer, Serializable {
 	}
 
 	private void registerAll() {
-		images = new ArrayList<>();
+		gameObjects = new ArrayList<>();
 
 		farmer = new Farmer(new Point2D(0, 0));
 
@@ -92,7 +92,7 @@ public class Farm implements Observer, Serializable {
 		if (key == SPACE) // Iniciar acção
 			action = true;
 		if (key == S)
-			Save.saveGame(SAVE);
+			FileLoader.saveGame(SAVE);
 		if (key == L) {
 			loadGame();
 		}
@@ -112,9 +112,9 @@ public class Farm implements Observer, Serializable {
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	// ============================Movimentos/TriggerAction/Ciclos/Alimentação)================//
+	// ============================(Cycles e Actions)================//
 	private void action(int key) {
-		if (farmer.isInside(farmer.getNova())) {
+		if (PositionUtil.isInside(farmer.getNova())) {
 			action = false;
 			applyAction();
 		} else
@@ -123,7 +123,7 @@ public class Farm implements Observer, Serializable {
 
 	private void addCycle() {
 		for (FarmObject x : getUpdatables())
-			((Updatable) x).addCiclo();
+			((Updatable) x).addCycle();
 		ciclos++;
 	}
 
@@ -131,11 +131,12 @@ public class Farm implements Observer, Serializable {
 		ImageMatrixGUI.getInstance().setStatusMessage("Pontos: " + pontos + " | Ciclos: " + ciclos);
 		ImageMatrixGUI.getInstance().update();
 	}
-	// =====================Diferentes Objetos e Ação========================//
+	// =====================Diferentes Objetos e
+	// AplicarAção========================//
 
 	public ArrayList<FarmObject> getInteratables(Point2D pos) {
 		ArrayList<FarmObject> list = new ArrayList<>();
-		for (FarmObject x : images)
+		for (FarmObject x : gameObjects)
 			if (x instanceof Interactable && x.getPosition().equals(pos))
 				list.add(x);
 		return list;
@@ -143,14 +144,14 @@ public class Farm implements Observer, Serializable {
 
 	public ArrayList<FarmObject> getUpdatables() {
 		ArrayList<FarmObject> list = new ArrayList<>();
-		for (FarmObject x : images)
+		for (FarmObject x : gameObjects)
 			if (x instanceof Updatable)
 				list.add(x);
 		return list;
 	}
 
 	private void applyAction() {
-		FarmObject x = FarmObject.getMajorObject(farmer.getNova());
+		FarmObject x = PositionUtil.getMajorObject(farmer.getNova());
 		if (x != null)
 			((Interactable) x).interactWith(farmer);
 	}
@@ -185,21 +186,26 @@ public class Farm implements Observer, Serializable {
 	}
 
 	public void addImage(FarmObject x) {
-		images.add(x);
+		gameObjects.add(x);
 		ImageMatrixGUI.getInstance().addImage((ImageTile) x);
 	}
 
+	private void addImages(List<FarmObject> list) {
+		for (FarmObject x : list)
+			addImage(x);
+	}
+
 	public void removeImage(FarmObject x) {
-		images.remove(x);
+		gameObjects.remove(x);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) x);
 	}
 
 	public void loadGame() {
-		Farm loaded = Save.loadGame(SAVE);
+		Farm loaded = FileLoader.loadGame(SAVE);
 		if (loaded != null)
 			if (dimension.equals(loaded.getDim())) {
 				ImageMatrixGUI.getInstance().clearImages();
-				images.clear();
+				gameObjects.clear();
 				addImages(loaded.getLista());
 				farmer = loaded.getFarmer();
 				pontos = loaded.getPontos();
@@ -211,14 +217,9 @@ public class Farm implements Observer, Serializable {
 			}
 	}
 
-	private void addImages(List<FarmObject> list) {
-		for (FarmObject x : list)
-			addImage(x);
-	}
-
-	// Getters//////////////////////
+	// ===========================Getters=============================//
 	public List<FarmObject> getLista() {
-		return images;
+		return gameObjects;
 	}
 
 	public Farmer getFarmer() {
@@ -237,7 +238,7 @@ public class Farm implements Observer, Serializable {
 		return dimension;
 	}
 
-	// Não precisa de alterar nada a partir deste ponto
+	// Ações De Inicialização
 	private void play() {
 		ImageMatrixGUI.getInstance().addObserver(this);
 		ImageMatrixGUI.getInstance().go();
@@ -249,7 +250,7 @@ public class Farm implements Observer, Serializable {
 	}
 
 	public static void main(String[] args) {
-		String[] dim = Save.readFile(CONFIG);
+		String[] dim = FileLoader.readTextFile(CONFIG);
 		Farm f = new Farm(Integer.parseInt(dim[0]), Integer.parseInt(dim[1]));
 		f.play();
 	}

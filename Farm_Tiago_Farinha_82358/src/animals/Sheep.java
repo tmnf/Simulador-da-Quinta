@@ -1,9 +1,9 @@
 package animals;
 
 import pt.iul.ista.poo.utils.Point2D;
+import entities.Farmer;
 import farm.Farm;
 import objects.FarmObject;
-import objects.Farmer;
 import vegetables.Vegetable;
 
 public class Sheep extends Animal {
@@ -14,19 +14,21 @@ public class Sheep extends Animal {
 	private static final int FAMINTO = 50;
 	
 	private static final int PONTOS = 1;
+	
+	public static final int PRICE = 100;
 
 	public Sheep(Point2D p) {
 		super(p);
-		setEstado("sheep");
+		setState("sheep");
 	}
 
 	@Override
 	public void updateState() {
-		if (getCiclos() >= FOME && getCiclos() < FAMINTO) {
+		if (getCycles() >= FOME && getCycles() < FAMINTO) {
 			startMoving();
-			comer();
-		} else if (getCiclos() >= FAMINTO) {
-			setEstado("famished_sheep");
+			eat();
+		} else if (getCycles() >= FAMINTO) {
+			setState("famished_sheep");
 			stopMoving();
 		} else Farm.getInstance().addPontos(PONTOS);
 
@@ -35,23 +37,23 @@ public class Sheep extends Animal {
 	@Override
 	public void interactWith(FarmObject x) {
 		if (x instanceof Farmer) {
-			setCuidado(true);
+			setCare(true);
 			stopMoving();
-			setEstado("sheep");
-			setCuidado(false);
-			resetCiclo();
+			setState("sheep");
+			setCare(false);
+			resetCycle();
 		}
 		if (x instanceof Vegetable) {
-			setCuidado(true);
+			setCare(true);
 			stopMoving();
-			setCuidado(false);
-			resetCiclo();
+			setCare(false);
+			resetCycle();
 		}
 	}
 
 	@Override
-	public void addCiclo() {
-		super.addCiclo();
+	public void addCycle() {
+		super.addCycle();
 		move();
 	}
 

@@ -1,10 +1,10 @@
 package animals;
 
 import pt.iul.ista.poo.utils.Point2D;
-
+import entities.Farmer;
 import farm.Farm;
 import objects.FarmObject;
-import objects.Farmer;
+import objects.PositionUtil;
 
 public class Egg extends Animal {
 
@@ -15,14 +15,18 @@ public class Egg extends Animal {
 
 	public Egg(Point2D p) {
 		super(p);
-		setEstado("egg");
+		setState("egg");
+	}
+
+	@Override
+	public int getPriority() {
+		return 2;
 	}
 
 	@Override
 	public void updateState() {
-		if (getCiclos() >= ECLODE) {
-			Position();
-			Farm.getInstance().addImage(new Chicken(getNova()));
+		if (getCycles() >= ECLODE) {
+			Farm.getInstance().addImage(new Chicken(PositionUtil.getNewPosition(getPosition())));
 			Farm.getInstance().removeImage(this);
 		}
 	}
@@ -35,8 +39,4 @@ public class Egg extends Animal {
 		}
 	}
 
-	@Override
-	public int getPriority() {
-		return 2;
-	}
 }

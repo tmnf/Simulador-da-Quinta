@@ -19,12 +19,12 @@ public class Tomato extends Vegetable {
 
 	@Override
 	public void updateState() {
-		if (getCiclos() >= getMature() && getCiclos() < getRotten() && getCuidado())
-			setEstado(getClass().getSimpleName().toLowerCase());
-		else if (getCiclos() >= getRotten())
-			setEstado(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase());
+		if (getCycles() >= getMature() && getCycles() < getRotten() && getCareInfo())
+			setState(getClass().getSimpleName().toLowerCase());
+		else if (getCycles() >= getRotten())
+			setState(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase());
 		else
-			setEstado(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase());
+			setState(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase());
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class Tomato extends Vegetable {
 
 	@Override
 	public void takeCare() {
-		setCuidado(true);
-		sumCicles(1);
+		setCare(true);
+		sumCycles(1);
 	}
 
 }

@@ -1,24 +1,19 @@
 package animals;
 
-import java.util.Collections;
-import java.util.List;
-
 import farm.Farm;
 import objects.FarmObject;
 import objects.ObjectState;
-import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Vegetable;
+import objects.PositionUtil;
 
 public abstract class Animal extends ObjectState {
 
 	private static final long serialVersionUID = 1L;
 
-	private Vegetable vegetal;
+	private Vegetable veg;
 
 	private boolean moving;
-
-	private Point2D nova;
 
 	public Animal(Point2D p) {
 		super(p);
@@ -34,44 +29,31 @@ public abstract class Animal extends ObjectState {
 		return 3;
 	}
 
-	public void comer() {
-		if (podeComer()) {
+	public void eat() {
+		if (canEat()) {
 			stopMoving();
-			vegetal.interactWith(this);
-			interactWith(vegetal);
-			setCuidado(true);
+			veg.interactWith(this);
+			interactWith(veg);
+			setCare(true);
 		}
 	}
 
-	public boolean podeComer() {
-		Position();
-		for (FarmObject x : Farm.getInstance().getInteratables(nova))
+	public boolean canEat() {
+		for (FarmObject x : Farm.getInstance().getInteratables(PositionUtil.getNewPosition(getPosition())))
 			if (x instanceof Vegetable && x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
-				vegetal = (Vegetable) x;
+				veg = (Vegetable) x;
 				return true;
 			}
 		return false;
 	}
 
-	public void setVegetal(Vegetable x) {
-		vegetal = x;
-	}
-
-	public void Position() {
-		List<Point2D> points = Direction.getNeighbourhoodPoints(getPosition());
-		Collections.shuffle(points);
-		for (Point2D x : points)
-			if (!Farm.getInstance().colides(x) && isInside(x)) {
-				nova = x;
-				return;
-			} else
-				nova = getPosition();
+	public void setVegetable(Vegetable x) {
+		veg = x;
 	}
 
 	public void move() {
 		if (moving) {
-			Position();
-			setPosition(nova);
+			setPosition(PositionUtil.getNewPosition(getPosition()));
 		}
 	}
 
@@ -81,10 +63,6 @@ public abstract class Animal extends ObjectState {
 
 	public void stopMoving() {
 		moving = false;
-	}
-
-	public Point2D getNova() {
-		return nova;
 	}
 
 }

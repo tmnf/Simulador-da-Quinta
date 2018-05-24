@@ -1,5 +1,6 @@
 package objects;
 
+import entities.Land;
 import farm.Farm;
 import interfaces.Interactable;
 import interfaces.Updatable;
@@ -9,57 +10,57 @@ public abstract class ObjectState extends FarmObject implements Updatable, Inter
 
 	private static final long serialVersionUID = 1L;
 
-	private String estado;
-	private int ciclos;
-	private boolean cuidado;
+	private String state;
+	private int cycles;
+	private boolean wasCared;
 
 	public ObjectState(Point2D p) {
 		super(p);
 		updateState();
-		cuidado = false;
+		wasCared = false;
 	}
 
-	public int getCiclos() {
-		return ciclos;
+	public int getCycles() {
+		return cycles;
 	}
 
 	@Override
 	public String getName() {
-		return estado;
+		return state;
 	}
 
-	public void setEstado(String state) {
-		estado = state;
+	public void setState(String state) {
+		this.state = state;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getState() {
+		return state;
 	}
 
-	public void sumCicles(int n) {
-		ciclos += n;
+	public void sumCycles(int n) {
+		cycles += n;
 	}
 
-	public boolean getCuidado() {
-		return cuidado;
+	public boolean getCareInfo() {
+		return wasCared;
 	}
 
 	@Override
-	public void addCiclo() {
-		ciclos++;
+	public void addCycle() {
+		cycles++;
 		updateState();
 	}
 
-	public void setCuidado(boolean x) {
-		cuidado = x;
+	public void setCare(boolean x) {
+		wasCared = x;
 	}
 
 	public void takeCare() {
-		cuidado = true;
+		wasCared = true;
 	}
 
-	public void resetCiclo() {
-		ciclos = 0;
+	public void resetCycle() {
+		cycles = 0;
 		updateState();
 	}
 

@@ -1,10 +1,11 @@
-package objects;
+package entities;
 
 import pt.iul.ista.poo.utils.Point2D;
 import java.util.Random;
 
 import farm.Farm;
 import interfaces.Interactable;
+import objects.FarmObject;
 import vegetables.Cabbage;
 import vegetables.Tomato;
 
@@ -12,24 +13,25 @@ public class Land extends FarmObject implements Interactable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String estado;
+	private String state;
 
 	public Land(Point2D p) {
 		super(p);
-		estado = "land";
+		state = "land";
 	}
 
 	@Override
 	public String getName() {
-		return estado;
+		return state;
 	}
+	
 	@Override 
 	public int getPriority() {
 		return 0;
 	}
 
 	public void setUnplowed() {
-		estado = "land";
+		state = "land";
 	}
 
 	@Override
@@ -38,7 +40,7 @@ public class Land extends FarmObject implements Interactable {
 			if (getName().equals("plowed")) {
 				plant();
 			} else
-				estado = "plowed";
+				state = "plowed";
 	}
 
 	public void plant() {

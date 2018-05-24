@@ -1,5 +1,6 @@
-package objects;
+package entities;
 
+import objects.FarmObject;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Rock extends FarmObject {

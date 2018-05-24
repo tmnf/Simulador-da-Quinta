@@ -3,10 +3,10 @@ package vegetables;
 import pt.iul.ista.poo.utils.Point2D;
 
 import animals.Animal;
+import entities.Farmer;
 import farm.Farm;
 import objects.Estado;
 import objects.FarmObject;
-import objects.Farmer;
 import objects.ObjectState;
 
 public abstract class Vegetable extends ObjectState {
@@ -29,12 +29,12 @@ public abstract class Vegetable extends ObjectState {
 
 	@Override
 	public void updateState() {
-		if (getCiclos() >= getMature() && getCiclos() < getRotten())
-			setEstado(getClass().getSimpleName().toLowerCase());
-		else if (getCiclos() >= getRotten())
-			setEstado(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase());
+		if (getCycles() >= getMature() && getCycles() < getRotten())
+			setState(getClass().getSimpleName().toLowerCase());
+		else if (getCycles() >= getRotten())
+			setState(Estado.RUINED.getPrefix() + getClass().getSimpleName().toLowerCase());
 		else
-			setEstado(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase());
+			setState(Estado.SMALL.getPrefix() + getClass().getSimpleName().toLowerCase());
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public abstract class Vegetable extends ObjectState {
 	}
 
 	public void takeCare() {
-		setCuidado(true);
+		setCare(true);
 	}
 
 	public abstract int getPontos();

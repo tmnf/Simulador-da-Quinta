@@ -9,17 +9,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-public class Save {
+public class FileLoader {
 
 	public static void saveGame(String filename) {
-		File save = new File(filename);
 		try {
-			FileOutputStream saveGame = new FileOutputStream(save);
-			ObjectOutputStream objOutput = new ObjectOutputStream(saveGame);
-
+			ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(filename));
 			objOutput.writeObject(Farm.getInstance());
 			objOutput.close();
-			saveGame.close();
 			Window.aviso("Jogo Salvo");
 		} catch (IOException e) {
 			Window.aviso("Erros na gravação do ficheiro!");
@@ -28,13 +24,10 @@ public class Save {
 
 	public static Farm loadGame(String filename) {
 		Farm farm = null;
-		File save = new File(filename);
 		try {
-			FileInputStream saveGame = new FileInputStream(save);
-			ObjectInputStream objInput = new ObjectInputStream(saveGame);
+			ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(filename));
 			farm = (Farm) objInput.readObject();
 			objInput.close();
-			saveGame.close();
 		} catch (IOException e) {
 			Window.aviso("Erro na leitura do ficheiro!");
 		} catch (ClassNotFoundException e) {
@@ -43,7 +36,7 @@ public class Save {
 		return farm;
 	}
 
-	public static String[] readFile(String s) {
+	public static String[] readTextFile(String s) {
 		String[] info = new String[100];
 		try {
 			Scanner fileScanner = new Scanner(new File(s));
