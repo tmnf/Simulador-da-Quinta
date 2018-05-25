@@ -12,7 +12,7 @@ import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 import vegetables.Vegetable;
 
-public class Cultivator extends Farmer implements Updatable, Interactable {
+public class Cultivator extends Farmer implements Updatable, Interactable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -80,6 +80,10 @@ public class Cultivator extends Farmer implements Updatable, Interactable {
 			working = false;
 		if (fuel == MAX_FUEL)
 			working = true;
+	}
+
+	public static int getPrice() {
+		return PRICE;
 	}
 
 }

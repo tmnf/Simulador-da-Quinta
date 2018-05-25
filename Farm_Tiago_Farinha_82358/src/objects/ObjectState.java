@@ -16,7 +16,6 @@ public abstract class ObjectState extends FarmObject implements Updatable, Inter
 
 	public ObjectState(Point2D p) {
 		super(p);
-		updateState();
 		wasCared = false;
 	}
 

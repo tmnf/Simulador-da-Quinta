@@ -15,7 +15,7 @@ public class Sheep extends Animal {
 	
 	private static final int PONTOS = 1;
 	
-	public static final int PRICE = 100;
+	private static final int PRICE = 100;
 
 	public Sheep(Point2D p) {
 		super(p);
@@ -55,6 +55,10 @@ public class Sheep extends Animal {
 	public void addCycle() {
 		super.addCycle();
 		move();
+	}
+
+	public static int getPrice() {
+		return PRICE;
 	}
 
 }

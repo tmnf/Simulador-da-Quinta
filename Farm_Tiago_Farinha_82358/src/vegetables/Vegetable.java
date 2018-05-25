@@ -15,6 +15,7 @@ public abstract class Vegetable extends ObjectState {
 
 	public Vegetable(Point2D p) {
 		super(p);
+		updateState();
 	}
 
 	@Override

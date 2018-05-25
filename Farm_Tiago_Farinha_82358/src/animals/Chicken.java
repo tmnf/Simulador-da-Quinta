@@ -15,7 +15,7 @@ public class Chicken extends Animal {
 	private static final int PONTOS = 2;
 	private static final int EGG = 10;
 
-	public static final int PRICE = 50;
+	private static final int PRICE = 50;
 
 	public Chicken(Point2D p) {
 		super(p);
@@ -54,4 +54,8 @@ public class Chicken extends Animal {
 		}
 	}
 
+	public static int getPrice() {
+		return PRICE;
+	}
+	
 }
