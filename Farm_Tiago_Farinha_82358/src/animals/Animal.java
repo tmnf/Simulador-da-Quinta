@@ -11,8 +11,6 @@ public abstract class Animal extends ObjectState {
 
 	private static final long serialVersionUID = 1L;
 
-	private Vegetable veg;
-
 	private boolean moving;
 
 	public Animal(Point2D p) {
@@ -29,26 +27,17 @@ public abstract class Animal extends ObjectState {
 		return 3;
 	}
 
-	public void eat() {
-		if (canEat()) {
-			stopMoving();
-			veg.interactWith(this);
-			interactWith(veg);
-			setCare(true);
-		}
+	public void eat(Vegetable veg) {
+		stopMoving();
+		veg.interactWith(this);
+		interactWith(veg);
+		setCare(true);
 	}
 
-	public boolean canEat() {
+	public void eatIfPossible() {
 		for (FarmObject x : Farm.getInstance().getInteratables(PositionUtil.getNewPosition(getPosition())))
-			if (x instanceof Vegetable && x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
-				veg = (Vegetable) x;
-				return true;
-			}
-		return false;
-	}
-
-	public void setVegetable(Vegetable x) {
-		veg = x;
+			if (x instanceof Vegetable && x.getName().equals(x.getClass().getSimpleName().toLowerCase()))
+				eat((Vegetable) x);
 	}
 
 	public void move() {

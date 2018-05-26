@@ -26,7 +26,7 @@ public class Sheep extends Animal {
 	public void updateState() {
 		if (getCycles() >= FOME && getCycles() < FAMINTO) {
 			startMoving();
-			eat();
+			eatIfPossible();
 		} else if (getCycles() >= FAMINTO) {
 			setState("famished_sheep");
 			stopMoving();

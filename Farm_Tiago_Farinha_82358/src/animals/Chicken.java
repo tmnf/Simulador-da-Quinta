@@ -30,20 +30,17 @@ public class Chicken extends Animal {
 		}
 		if (getCycles() % 2 == 0) {
 			startMoving();
-			eat();
+			eatIfPossible();
 			move();
 			stopMoving();
 		}
 	}
 
 	@Override
-	public boolean canEat() {
+	public void eatIfPossible() {
 		for (FarmObject x : Farm.getInstance().getInteratables(PositionUtil.getNewPosition(getPosition())))
-			if (x instanceof Tomato && x.getName().equals(x.getClass().getSimpleName().toLowerCase())) {
-				setVegetable((Vegetable) x);
-				return true;
-			}
-		return false;
+			if (x instanceof Tomato && x.getName().equals(x.getClass().getSimpleName().toLowerCase()))
+				eat((Vegetable) x);
 	}
 
 	@Override
@@ -57,5 +54,5 @@ public class Chicken extends Animal {
 	public static int getPrice() {
 		return PRICE;
 	}
-	
+
 }
