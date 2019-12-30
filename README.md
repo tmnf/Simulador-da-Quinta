@@ -8,3 +8,5 @@ Funcionalidades:
 * Ciclos de Vida
 * Animais
 * Mercado
+
+Nota máxima obtida com este projeto
